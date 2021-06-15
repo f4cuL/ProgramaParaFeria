@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -178,5 +180,48 @@ public class Modelo {
 			System.out.println(e);
 		}
 		return 0;
+	}
+	
+	public void borrarPrendasIdProovedor(int id) {
+		String sql= "delete from prenda where idProovedor="+id;
+		try {
+			Connection con = conexion.getConexion();
+			PreparedStatement ps = null;
+			ps = con.prepareStatement(sql);
+			ps.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public int tomarIDporCodigo(String codigo) {
+		String sql= "select id from proovedores where codigo='"+codigo+"'";
+		try {
+			Connection con = conexion.getConexion();
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()){
+				return rs.getInt("id");
+			}
+						
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	public void borrarProovedorPorId(int id) {
+		String sql= "delete from proovedores where id="+id;
+		try {
+			Connection con = conexion.getConexion();
+			PreparedStatement ps = null;
+			ps = con.prepareStatement(sql);
+			ps.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 	}
 }

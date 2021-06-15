@@ -1,5 +1,6 @@
 package Vista;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 
@@ -71,6 +72,20 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 				}
 			}
 		});
+		
+		JButton btnNewButton_2 = new JButton("Borrar proovedor");
+		btnNewButton_2.setForeground(Color.RED);
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			int opcion=JOptionPane.showConfirmDialog(null,"¿Estás seguro?, esta acción no se puede revertir, todas las prendas asociadas a este proovedor seran borradas.", "CUIDADO", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+			if (opcion==0) {
+				controlador.getModelo().borrarPrendasIdProovedor(controlador.getModelo().tomarIDporCodigo(controlador.getModelo().tomarCodigoTabla(controlador.getProovedores().getTable())));
+				controlador.getModelo().borrarProovedorPorId(controlador.getModelo().tomarIDporCodigo(controlador.getModelo().tomarCodigoTabla(controlador.getProovedores().getTable())));
+				dispose();
+			}
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -78,15 +93,17 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 742, Short.MAX_VALUE)
-								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-									.addComponent(lblNewLabel)
-									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 742, Short.MAX_VALUE)
+								.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+									.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(btnNewButton_1))))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(18) 
-							.addComponent(btnNewButton)))
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnNewButton_2)
+								.addComponent(btnNewButton))))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -100,7 +117,9 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 316, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addComponent(btnNewButton)
-					.addContainerGap(79, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnNewButton_2)
+					.addContainerGap(47, Short.MAX_VALUE))
 		);
 		
 		tablaPrendas = new JTable();

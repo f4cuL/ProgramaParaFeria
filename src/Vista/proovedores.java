@@ -209,11 +209,10 @@ public class proovedores extends JInternalFrame {
 		btnMpp = new JButton("Editar proovedor seleccionado");
 		btnMpp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				table.setEnabled(false);
 				if(table.getSelectionModel().isSelectionEmpty())
 				{
 					JOptionPane.showMessageDialog(null, "DEBES SELECCIONAR UN PROOVEDOR PRIMERO",
-			                "ERROR", JOptionPane.ERROR_MESSAGE);
+			                "ERROR", JOptionPane.ERROR_MESSAGE);;
 				}
 				else
 				{
@@ -221,6 +220,7 @@ public class proovedores extends JInternalFrame {
 				Controlador.setMostrarProovedorPrendas(mpp);
 				Controlador.getModelo().centrarJIP(mpp);
 				Controlador.getMenuPrincipal().getDesktopPane().add(mpp,0);
+				table.setEnabled(false);
 				try {
 					mpp.setSelected(true);
 				} catch (PropertyVetoException e1) {
@@ -228,7 +228,6 @@ public class proovedores extends JInternalFrame {
 					e1.printStackTrace();
 				}
 				Controlador.getModelo().listarPrendasPorNombre(Controlador.getMostrarProovedorPrendas().getTablaPrendas(),Controlador.getModelo().tomarNombreTabla(table));
-				btnMpp.setEnabled(false);
 			}}
 		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());

@@ -117,7 +117,7 @@ public class menuPrincipal {
 		JMenuItem mntmNewMenuItem = new JMenuItem("Test bdd");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controlador.getModelo().obtenerTotalPagar("valorantt");
+				controlador.getModelo().borrarProovedorPorId(5);
 			}
 		});
 		mnNewMenu.add(mntmNewMenuItem);
