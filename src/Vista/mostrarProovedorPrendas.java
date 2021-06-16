@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.SwingConstants;
 
 public class mostrarProovedorPrendas extends JInternalFrame {
 	Controlador controlador;
@@ -33,7 +34,7 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public mostrarProovedorPrendas(Controlador controlador) {
-		setBounds(100, 100, 778, 517);
+		setBounds(100, 100, 778, 525);
 		setControlador(controlador);
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.addMouseListener(new MouseAdapter() {
@@ -43,7 +44,9 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 			}
 		});
 		JLabel lblNewLabel = new JLabel("<html>" +"Visualizando al proovedor <B>"+ controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()) + "</B> con el CODIGO  <B>" + controlador.getModelo().tomarCodigoTabla(controlador.getProovedores().getTable()) + "</B></html>") ;
-		lblNewLabel.setFont(new Font("MS Sans Serif", Font.PLAIN, 20));
+		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel.setFont(new Font("SansSerif", Font.PLAIN, 17));
 		
 		JButton btnNewButton = new JButton("Agregar prenda");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -54,6 +57,7 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 				controlador.setAgregarPrenda(aP);
 				aP.setControlador(controlador);
 				controlador.getMenuPrincipal().getDesktopPane().add(aP,0);
+				btnNewButton.setEnabled(false);
 				
 			}
 		});
@@ -89,6 +93,7 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 		});
 		
 		JButton btnCambiarNombre = new JButton("Cambiar nombre");
+		JButton btnCambiarCodigo = new JButton("Cambiar codigo");
 		btnCambiarNombre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nombre = JOptionPane.showInputDialog("Ingrese nuevo nombre");
@@ -96,16 +101,19 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 					JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio", "Error", JOptionPane.WARNING_MESSAGE);
 				}else {
 					controlador.getModelo().cambiarNombre(nombre, controlador.getModelo().tomarCodigoTabla(controlador.getProovedores().getTable()));
+					if (btnCambiarCodigo.isEnabled())
+					{
 					lblNewLabel.setText("<html> Visualizando al proovedor <B>"+ nombre + "</B> con el CODIGO  <B>" + controlador.getModelo().tomarCodigoTabla(controlador.getProovedores().getTable()) + "</B></html>");
-					btnCambiarNombre.setEnabled(false);
+					}else {
+						lblNewLabel.setText("Cierre esta pestaña para que se efectuen los cambios");
+					}
 				}
 			}
 		});
 		
-		JButton btnCambiarCodigo = new JButton("Cambiar codigo");
 		btnCambiarCodigo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String codigo = JOptionPane.showInputDialog("Ingrese nuevo codigo");
+				String codigo = JOptionPane.showInputDialog("Ingrese nuevo codigo(Cambiar el codigo cerrará esta pestaña)");
 				if (controlador.getModelo().codigoRepetido(codigo)){
 					JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio, ya existe otro proovedor con ese codigo", "Error", JOptionPane.WARNING_MESSAGE);
 				}else {
@@ -113,55 +121,58 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 					JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio", "Error", JOptionPane.WARNING_MESSAGE);
 				}else {
 					controlador.getModelo().cambiarCodigo(codigo, controlador.getModelo().tomarCodigoTabla(controlador.getProovedores().getTable()));
-					lblNewLabel.setText("<html> Visualizando al proovedor <B>"+ controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()) + "</B> con el CODIGO  <B>" + codigo + "</B></html>");
-					btnCambiarCodigo.setEnabled(false);
+					dispose();
 				}
 			}
 		}
 		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 742, Short.MAX_VALUE)
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE)
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnNewButton_1))
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-							.addGap(18)
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(btnNewButton)
+							.addPreferredGap(ComponentPlacement.RELATED, 399, Short.MAX_VALUE)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnNewButton_2)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(btnNewButton_2)
-									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(btnCambiarNombre)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnCambiarCodigo))
-								.addComponent(btnNewButton))))
+									.addGap(18)
+									.addComponent(btnCambiarCodigo)))))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(14)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnNewButton_1))
-					.addGap(43)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 284, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(btnNewButton)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 321, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnNewButton_2)
-						.addComponent(btnCambiarNombre)
-						.addComponent(btnCambiarCodigo))
-					.addContainerGap(47, Short.MAX_VALUE))
+						.addComponent(btnCambiarCodigo)
+						.addComponent(btnNewButton)
+						.addComponent(btnCambiarNombre))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnNewButton_2)
+					.addContainerGap(33, Short.MAX_VALUE))
 		);
 		
-		tablaPrendas = new JTable();
+		tablaPrendas = new JTable() {
+			public boolean isCellEditable(int row, int column){  
+		          return false;  
+		      }
+		};
 		tablaPrendas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
