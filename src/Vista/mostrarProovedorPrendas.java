@@ -57,7 +57,7 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 				
 			}
 		});
-		
+		setTitle("Proovedor "+controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
 		JButton btnNewButton_1 = new JButton("Cambiar estado de pago");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -74,6 +74,7 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 		});
 		
 		JButton btnNewButton_2 = new JButton("Borrar proovedor");
+		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnNewButton_2.setForeground(Color.RED);
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -86,23 +87,58 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 			}
 			}
 		});
+		
+		JButton btnCambiarNombre = new JButton("Cambiar nombre");
+		btnCambiarNombre.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String nombre = JOptionPane.showInputDialog("Ingrese nuevo nombre");
+				if (nombre==null || nombre.equals("")){
+					JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio", "Error", JOptionPane.WARNING_MESSAGE);
+				}else {
+					controlador.getModelo().cambiarNombre(nombre, controlador.getModelo().tomarCodigoTabla(controlador.getProovedores().getTable()));
+					lblNewLabel.setText("<html> Visualizando al proovedor <B>"+ nombre + "</B> con el CODIGO  <B>" + controlador.getModelo().tomarCodigoTabla(controlador.getProovedores().getTable()) + "</B></html>");
+					btnCambiarNombre.setEnabled(false);
+				}
+			}
+		});
+		
+		JButton btnCambiarCodigo = new JButton("Cambiar codigo");
+		btnCambiarCodigo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String codigo = JOptionPane.showInputDialog("Ingrese nuevo codigo");
+				if (controlador.getModelo().codigoRepetido(codigo)){
+					JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio, ya existe otro proovedor con ese codigo", "Error", JOptionPane.WARNING_MESSAGE);
+				}else {
+				if (codigo==null || codigo.equals("")){
+					JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio", "Error", JOptionPane.WARNING_MESSAGE);
+				}else {
+					controlador.getModelo().cambiarCodigo(codigo, controlador.getModelo().tomarCodigoTabla(controlador.getProovedores().getTable()));
+					lblNewLabel.setText("<html> Visualizando al proovedor <B>"+ controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()) + "</B> con el CODIGO  <B>" + codigo + "</B></html>");
+					btnCambiarCodigo.setEnabled(false);
+				}
+			}
+		}
+		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 742, Short.MAX_VALUE)
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 							.addContainerGap()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 742, Short.MAX_VALUE)
-								.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-									.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnNewButton_1))))
-						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnNewButton_1))
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 							.addGap(18)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnNewButton_2)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(btnNewButton_2)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnCambiarNombre)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnCambiarCodigo))
 								.addComponent(btnNewButton))))
 					.addContainerGap())
 		);
@@ -113,12 +149,15 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNewLabel)
 						.addComponent(btnNewButton_1))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 316, GroupLayout.PREFERRED_SIZE)
+					.addGap(43)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 284, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addComponent(btnNewButton)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnNewButton_2)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnNewButton_2)
+						.addComponent(btnCambiarNombre)
+						.addComponent(btnCambiarCodigo))
 					.addContainerGap(47, Short.MAX_VALUE))
 		);
 		

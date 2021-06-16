@@ -220,6 +220,7 @@ public class proovedores extends JInternalFrame {
 				Controlador.setMostrarProovedorPrendas(mpp);
 				Controlador.getModelo().centrarJIP(mpp);
 				Controlador.getMenuPrincipal().getDesktopPane().add(mpp,0);
+				btnMpp.setEnabled(false);
 				table.setEnabled(false);
 				try {
 					mpp.setSelected(true);

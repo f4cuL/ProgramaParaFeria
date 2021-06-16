@@ -61,32 +61,35 @@ public class agregarProovedor extends JInternalFrame {
 		getContentPane().setEnabled(false);
 		setClosable(true);
 		setBounds(100, 100, 255, 211);
-		
+
 		JButton btnAgregarProovedor = new JButton("Agregar");
 		btnAgregarProovedor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
-			if (inputNombre.getText().isEmpty() || inptCodigo.getText().isEmpty())
-			{
-				 JOptionPane.showMessageDialog(null, "NO PUEDE ESTAR VACIO EL NOMBRE O EL CODIGO",
-			                "ERROR", JOptionPane.ERROR_MESSAGE);
-			}
-			else {
-		      if (JOptionPane.showConfirmDialog(null, "¿Estás seguro que deseas agregar a " +  inputNombre.getText() + "?",
-		                "AVISO: Estás agrengado un nuevo proovedor", JOptionPane.YES_NO_OPTION,
-		                JOptionPane.WARNING_MESSAGE) == 0) {
-		    	  
-		    	    controlador.getModelo().agregarProovedor(inputNombre.getText(),inptCodigo.getText());
-					controlador.getModelo().limpiarTabla(controlador.getProovedores().getTable());
-					controlador.getModelo().listarProovedores(controlador.getProovedores().getTable());
-					inputNombre.setText(null);
-					dispose();
-		    	  
-		      }
-			}
+				if (inputNombre.getText().isEmpty() || inptCodigo.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "NO PUEDE ESTAR VACIO EL NOMBRE O EL CODIGO", "ERROR",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					if (controlador.getModelo().codigoRepetido(inptCodigo.getText())) {
+						JOptionPane.showMessageDialog(null, "YA EXISTE UN PROOVEDOR CON ESE CODIGO", "ERROR",
+								JOptionPane.ERROR_MESSAGE);
+					} else {
+						if (JOptionPane.showConfirmDialog(null,
+								"¿Estás seguro que deseas agregar a " + inputNombre.getText() + "?",
+								"AVISO: Estás agrengado un nuevo proovedor", JOptionPane.YES_NO_OPTION,
+								JOptionPane.WARNING_MESSAGE) == 0) {
+
+							controlador.getModelo().agregarProovedor(inputNombre.getText(), inptCodigo.getText());
+							controlador.getModelo().limpiarTabla(controlador.getProovedores().getTable());
+							controlador.getModelo().listarProovedores(controlador.getProovedores().getTable());
+							inputNombre.setText(null);
+							dispose();
+
+						}
+					}
+				}
 			}
 		});
-		
+
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

@@ -224,4 +224,48 @@ public class Modelo {
 			e.printStackTrace();
 		}	
 	}
+	public boolean cambiarNombre(String nombre, String codigo) {
+		String sql="update proovedores set nombre='"+nombre+"' where codigo='"+codigo+"'";
+		try {
+			Connection con = conexion.getConexion();
+			PreparedStatement ps = null;
+			ps = con.prepareStatement(sql);
+			ps.execute(sql);
+		}catch (Exception e){
+			System.out.println(e);
+			return false;
+		}
+		return true;
+	}
+	public boolean cambiarCodigo(String nuevoCodigo, String codigo) {
+		String sql="update proovedores set codigo='"+nuevoCodigo+"' where codigo='"+codigo+"'";
+		try {
+			Connection con = conexion.getConexion();
+			PreparedStatement ps = null;
+			ps = con.prepareStatement(sql);
+			ps.execute(sql);
+		}catch (Exception e){
+			System.out.println(e);
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean codigoRepetido(String codigo) {
+		String sql="select * from proovedores where codigo='"+codigo+"'";
+		try {
+			Connection con = conexion.getConexion();
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery(sql);
+			while (rs.next()) {
+				return true;
+			}
+			return false;
+		}catch (Exception e){
+			System.out.println(e);
+		}
+		return false;
+	}
 }
