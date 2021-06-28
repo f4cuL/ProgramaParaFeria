@@ -71,6 +71,7 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 				aP.setControlador(controlador);
 				controlador.getMenuPrincipal().getDesktopPane().add(aP,0);
 				aP.toFront();
+				setClosable(false);
 				try {
 					aP.setSelected(true);
 				} catch (PropertyVetoException e1) {
@@ -317,6 +318,7 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 	
 	public void dispose() {
 		controlador.getProovedores().btnMpp.setEnabled(true);
+		controlador.getProovedores().setClosable(true);
 		controlador.getModelo().limpiarTabla(controlador.getProovedores().getTable());
 		controlador.getModelo().listarProovedores(controlador.getProovedores().getTable());
 		controlador.getProovedores().getTable().setEnabled(true);

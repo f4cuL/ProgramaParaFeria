@@ -133,6 +133,7 @@ public class agregarPrenda extends JInternalFrame {
 	}
 	public void dispose() {
 		Controlador.getMostrarProovedorPrendas().getBtnNewButton().setEnabled(true);
+		Controlador.getMostrarProovedorPrendas().setClosable(true);
 		super.dispose();
 	}
 }
