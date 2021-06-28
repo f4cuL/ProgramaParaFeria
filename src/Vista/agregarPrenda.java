@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.BorderLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -14,27 +16,29 @@ import Controlador.Controlador;
 
 import javax.swing.JTextArea;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class agregarPrenda extends JInternalFrame {
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField inputNombre;
+	private JTextField inputPrecio;
 	private Controlador Controlador;
 
 
 	public JTextField getTextField() {
-		return textField;
+		return inputNombre;
 	}
 
 	public void setTextField(JTextField textField) {
-		this.textField = textField;
+		this.inputNombre = textField;
 	}
 
 	public JTextField getTextField_1() {
-		return textField_1;
+		return inputPrecio;
 	}
 
 	public void setTextField_1(JTextField textField_1) {
-		this.textField_1 = textField_1;
+		this.inputPrecio = textField_1;
 	}
 
 	public Controlador getControlador() {
@@ -49,60 +53,86 @@ public class agregarPrenda extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public agregarPrenda() {
-		setBounds(100, 100, 450, 226);
+		setBounds(100, 100, 222, 192);
 		
 		JLabel lblNewLabel = new JLabel("Nombre de prenda");
-		
-		textField = new JTextField();
-		textField.setColumns(10);
+		setTitle("Agregar prenda");
+		inputNombre = new JTextField();
+		inputNombre.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Precio");
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
+		inputPrecio = new JTextField();
+		inputPrecio.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Agregar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (inputPrecio.getText().isEmpty() || inputNombre.getText().isEmpty())
+				{
+					JOptionPane.showMessageDialog(null, "NO PUEDE ESTAR VACIO EL NOMBRE O EL PRECIO", "ERROR",
+							JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+				try {
+					int precio=Integer.parseInt(inputPrecio.getText());
+					int id=Controlador.getModelo().tomarIDporCodigo(Controlador.getModelo().tomarCodigoTabla(Controlador.getProovedores().getTable()));
+					if (Controlador.getModelo().agregarPrenda(inputNombre.getText(),precio,id)) {
+						Controlador.getModelo().limpiarTabla(Controlador.getMostrarProovedorPrendas().getTablaPrendas());
+						Controlador.getModelo().listarPrendasPorNombre(Controlador.getMostrarProovedorPrendas().getTablaPrendas(),Controlador.getModelo().tomarNombreTabla(Controlador.getProovedores().getTable()));
+						dispose();
+					};
+				} catch (Exception e2) {
+					// TODO: handle exception
+					if (!inputPrecio.getText().isEmpty())
+					{
+					JOptionPane.showMessageDialog(null, "NO PUEDE CONTENER LETRAS EL PRECIO", "ERROR",
+							JOptionPane.ERROR_MESSAGE);
+					}
+				}
+				}
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 434, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 434, GroupLayout.PREFERRED_SIZE))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(348, Short.MAX_VALUE))
+					.addComponent(lblNewLabel_1))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(lblNewLabel_1)
-					.addContainerGap(405, Short.MAX_VALUE))
+					.addComponent(inputNombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(348, Short.MAX_VALUE))
+					.addComponent(inputPrecio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(119)
-					.addComponent(btnNewButton)
-					.addContainerGap(254, Short.MAX_VALUE))
+					.addGap(60)
+					.addComponent(btnNewButton))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
+					.addGap(11)
 					.addComponent(lblNewLabel)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(inputNombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
 					.addComponent(lblNewLabel_1)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
+					.addComponent(inputPrecio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnNewButton)
-					.addContainerGap(115, Short.MAX_VALUE))
+					.addGap(31))
 		);
 		getContentPane().setLayout(groupLayout);
 		setClosable(true);
 
+	}
+	public void dispose() {
+		Controlador.getMostrarProovedorPrendas().getBtnNewButton().setEnabled(true);
+		super.dispose();
 	}
 }

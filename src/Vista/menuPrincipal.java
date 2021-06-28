@@ -1,6 +1,8 @@
 package Vista;
 
 import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -22,6 +24,7 @@ import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 public class menuPrincipal {
 
@@ -80,11 +83,22 @@ public class menuPrincipal {
 		frame = new JFrame();
 		frame.setForeground(Color.WHITE);
 		frame.getContentPane().setEnabled(false);
-		
+		frame.setTitle("RENOVA VIP");
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setSize(screenSize);
 		
-		desktopPane = new JDesktopPane();
+		ImageIcon icon = new ImageIcon(getClass().getResource("/imagenes/fondo.png"));
+		Image image = icon.getImage();
+
+		
+		desktopPane = new JDesktopPane() {
+			 protected void paintComponent(Graphics g) {
+			        super.paintComponent(g);
+			        g.setColor(Color.BLACK);
+			        g.fillRect(0, 0, getWidth(), getHeight());
+			        g.drawImage(image, 0, 0, null);
+			    }
+		};
 		desktopPane.setForeground(Color.WHITE);
 		
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -94,10 +108,10 @@ public class menuPrincipal {
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 
-		JMenu mnNewMenu = new JMenu("New menu");
+		JMenu mnNewMenu = new JMenu("Proovedores");
 		menuBar.add(mnNewMenu);
 
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("New menu item");
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Lista de proovedores");
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (contador == 0) {
@@ -117,7 +131,7 @@ public class menuPrincipal {
 		JMenuItem mntmNewMenuItem = new JMenuItem("Test bdd");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(controlador.getModelo().codigoRepetido("hola"));
+				controlador.getModelo().agregarPrenda("Poronga", 500,2);
 			}
 		});
 		mnNewMenu.add(mntmNewMenuItem);
@@ -151,6 +165,4 @@ public class menuPrincipal {
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}		
-	
-	
 }

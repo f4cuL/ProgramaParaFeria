@@ -222,7 +222,7 @@ public class proovedores extends JInternalFrame {
 				Controlador.getMenuPrincipal().getDesktopPane().add(mpp,0);
 				btnMpp.setEnabled(false);
 				table.setEnabled(false);
-				try {
+				try { 
 					mpp.setSelected(true);
 				} catch (PropertyVetoException e1) {
 					// TODO Auto-generated catch block

@@ -67,7 +67,7 @@ public class Modelo {
 
 	public void listarProovedores(JTable tabla) {
 		limpiarTabla(tabla);
-		String sql = "select p.nombre, p.codigo from proovedores p group by p.nombre order by p.nombre ASC";
+		String sql = "select p.nombre, p.codigo from proovedores p group by p.nombre order by p.codigo ASC";
 		try {
 			PreparedStatement ps = null;
 			ResultSet rs = null;
@@ -89,14 +89,14 @@ public class Modelo {
 	}
 	public void listarPrendasPorNombre(JTable tabla, String nombre) {
 		limpiarTabla(tabla);
-		String sql = "select pr.id, pr.nombrePrenda, pr.precio, pr.estadoPago from prenda pr left join proovedores p on pr.idProovedor = p.id where p.nombre='"+nombre+"'";
+		String sql = "select pr.id, pr.nombrePrenda, pr.precio, pr.estadoPago, pr.estadoVendido from prenda pr left join proovedores p on pr.idProovedor = p.id where p.nombre='"+nombre+"'";
 		try {
 			PreparedStatement ps = null;
 			ResultSet rs = null;
 			Connection con = conexion.getConexion();
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
-			Object[] prenda = new Object[4];
+			Object[] prenda = new Object[5];
 			DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
 			rs = ps.executeQuery(sql);
 			while (rs.next()) {
@@ -107,7 +107,12 @@ public class Modelo {
 				case 0: prenda[2] = "NO PAGO"; break;
 				case 1: prenda[2] = "PAGADO"; break;
 				}
-				prenda[3] = rs.getInt("pr.id");
+				int estadoVendido = rs.getInt("pr.estadoVendido");
+				switch(estadoVendido) {
+				case 0: prenda[3] = "NO VENDIDO"; break;
+				case 1: prenda[3] = "VENDIDO"; break;
+				}
+				prenda[4] = rs.getInt("pr.id");
 				modelo.addRow(prenda);
 			}
 		} catch (Exception e) {
@@ -148,12 +153,25 @@ public class Modelo {
 
 	public String tomarIdTabla(JTable tabla){
 		int row = tabla.getSelectedRow();	
-		String id = tabla.getModel().getValueAt(row, 3).toString();
+		String id = tabla.getModel().getValueAt(row, 4).toString();
 		return id;
 	}
 
 	public boolean setPagoTrueFalse(int id) {
 		String sql="update prenda set estadoPago = NOT estadoPago where id="+id;
+		try {
+			Connection con = conexion.getConexion();
+			PreparedStatement ps = null;
+			ps = con.prepareStatement(sql);
+			ps.execute(sql);
+		}catch (Exception e){
+			System.out.println(e);
+			return false;
+		}
+		return true;
+	}
+	public boolean setVendidoTrueFalse(int id) {
+		String sql="update prenda set estadoVendido = NOT estadoVendido where id="+id;
 		try {
 			Connection con = conexion.getConexion();
 			PreparedStatement ps = null;
@@ -237,6 +255,32 @@ public class Modelo {
 		}
 		return true;
 	}
+	public boolean cambiarNombrePrenda(String nombre, String id) {
+		String sql="update prenda set nombrePrenda='"+nombre+"' where id='"+id+"'";
+		try {
+			Connection con = conexion.getConexion();
+			PreparedStatement ps = null;
+			ps = con.prepareStatement(sql);
+			ps.execute(sql);
+		}catch (Exception e){
+			System.out.println(e);
+			return false;
+		}
+		return true;
+	} 
+	public boolean cambiarPrecioPrenda(int precio, String id) {
+		String sql="update prenda set precio='"+precio+"' where id='"+id+"'";
+		try {
+			Connection con = conexion.getConexion();
+			PreparedStatement ps = null;
+			ps = con.prepareStatement(sql);
+			ps.execute(sql);
+		}catch (Exception e){
+			System.out.println(e);
+			return false;
+		}
+		return true;
+	} 
 	public boolean cambiarCodigo(String nuevoCodigo, String codigo) {
 		String sql="update proovedores set codigo='"+nuevoCodigo+"' where codigo='"+codigo+"'";
 		try {
@@ -268,4 +312,21 @@ public class Modelo {
 		}
 		return false;
 	}
+	
+	public boolean agregarPrenda(String nombre, int precio, int idProovedor) {
+		String sql= "insert into prenda(id,nombrePrenda,precio,estadoPago,estadoVendido,idProovedor) values (NULL,'"+nombre+"',"+precio+",0,0,"+idProovedor+")";
+		Connection con = conexion.getConexion();
+		PreparedStatement ps = null;
+		try {
+			ps=con.prepareStatement(sql); 
+			ps.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return true;
+	}
+	
+	
 }
