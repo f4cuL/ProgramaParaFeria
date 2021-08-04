@@ -132,7 +132,7 @@ public class menuPrincipal {
 		JMenuItem mntmNewMenuItem = new JMenuItem("Test bdd");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(controlador.getModelo().fechaNull(1));
+				
 			}
 		});
 		mnNewMenu.add(mntmNewMenuItem);

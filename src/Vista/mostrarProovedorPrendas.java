@@ -50,7 +50,7 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public mostrarProovedorPrendas(Controlador controlador) {
-		setBounds(100, 100, 778, 525);
+		setBounds(100, 100, 1236, 525);
 		setControlador(controlador);
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.addMouseListener(new MouseAdapter() {
@@ -88,7 +88,7 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 		setTitle("Proovedor "+controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
 		JButton btnNewButton_1 = new JButton("Cambiar estado de pago");
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnNewButton_1.setForeground(new Color(0, 128, 128));
+		btnNewButton_1.setForeground(Color.BLUE);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (tablaPrendas.getSelectionModel().isSelectionEmpty()) {
@@ -161,7 +161,7 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 		
 		JButton btnNewButton_3 = new JButton("Cambiar estado de venta\r\n");
 		btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnNewButton_3.setForeground(new Color(0, 128, 128));
+		btnNewButton_3.setForeground(new Color(220, 20, 60));
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (tablaPrendas.getSelectionModel().isSelectionEmpty()) {
@@ -185,7 +185,8 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 				}
 				else
 				{	
-				String nombre = JOptionPane.showInputDialog("Ingrese nuevo nombre");
+				DefaultTableModel tm = (DefaultTableModel) tablaPrendas.getModel();
+				String nombre = JOptionPane.showInputDialog(null,"<html>Ingrese nuevo nombre para <b> "+ String.valueOf(tm.getValueAt(tablaPrendas.getSelectedRow(),0)) + "</b></html>");
 				if (nombre==null || nombre.equals("")){
 					JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio", "Error", JOptionPane.WARNING_MESSAGE);
 				}
@@ -206,7 +207,8 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 			                "ERROR", JOptionPane.ERROR_MESSAGE);				
 				}else
 				{	
-				String nombre = JOptionPane.showInputDialog("Ingrese nuevo nombre");
+				DefaultTableModel tm = (DefaultTableModel) tablaPrendas.getModel();
+				String nombre = JOptionPane.showInputDialog("<html>Ingrese nuevo precio, precio anterior:<b>"+String.valueOf(tm.getValueAt(tablaPrendas.getSelectedRow(),1)) + "</b></html>)");
 				if (nombre==null || nombre.equals("")){
 					JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio", "Error", JOptionPane.WARNING_MESSAGE);
 				}
@@ -261,49 +263,58 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 		});
 		btnNewButton_8_1.setForeground(SystemColor.textHighlight);
 		btnNewButton_8_1.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		
+		JButton btnNewButton_8_1_1 = new JButton("Ordenar por fecha pago");
+		btnNewButton_8_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controlador.getModelo().listarPrendasPorNombreFechaPago(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
+				
+			}
+		});
+		btnNewButton_8_1_1.setForeground(SystemColor.textHighlight);
+		btnNewButton_8_1_1.setFont(new Font("Tahoma", Font.ITALIC, 11));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(btnNewButton_5, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(btnNewButton_4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(btnNewButton_3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(btnNewButton_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnNewButton)
-								.addComponent(btnNewButton_6))
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 862, Short.MAX_VALUE)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+										.addComponent(btnNewButton_5, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(btnNewButton_4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnNewButton_7)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnNewButton_8)
-									.addPreferredGap(ComponentPlacement.RELATED, 7, Short.MAX_VALUE))
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+										.addComponent(btnNewButton_3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(btnNewButton_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
 								.addGroup(groupLayout.createSequentialGroup()
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(btnNewButton)
+										.addComponent(btnNewButton_6))
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnNewButton_8_1, GroupLayout.PREFERRED_SIZE, 221, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.UNRELATED)))
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnNewButton_2)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(btnCambiarNombre)
-									.addGap(18)
-									.addComponent(btnCambiarCodigo)))))
-					.addContainerGap())
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE)
-					.addGap(19))
+									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(btnNewButton_7)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(btnNewButton_8)
+											.addPreferredGap(ComponentPlacement.RELATED, 234, Short.MAX_VALUE)
+											.addComponent(btnNewButton_8_1_1, GroupLayout.PREFERRED_SIZE, 221, GroupLayout.PREFERRED_SIZE))
+										.addComponent(btnNewButton_8_1, GroupLayout.PREFERRED_SIZE, 221, GroupLayout.PREFERRED_SIZE))
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(btnNewButton_2)
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(btnCambiarNombre)
+											.addGap(18)
+											.addComponent(btnCambiarCodigo)))))
+							.addContainerGap())
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 1191, Short.MAX_VALUE)
+							.addGap(19))))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -334,7 +345,8 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 						.addComponent(btnNewButton_2)
 						.addComponent(btnNewButton_6)
 						.addComponent(btnNewButton_7)
-						.addComponent(btnNewButton_8))
+						.addComponent(btnNewButton_8)
+						.addComponent(btnNewButton_8_1_1))
 					.addContainerGap(30, Short.MAX_VALUE))
 		);
 		

@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 import javax.swing.JInternalFrame;
@@ -113,14 +114,14 @@ public class Modelo {
 	}
 	public void listarPrendasPorNombre(JTable tabla, String nombre) {
 		limpiarTabla(tabla);
-		String sql = "select pr.id, pr.nombrePrenda, pr.precio, pr.estadoPago, pr.estadoVendido from prenda pr left join proovedores p on pr.idProovedor = p.id where p.nombre='"+nombre+"' order by pr.nombrePrenda ASC";
+		String sql = "select pr.id, pr.nombrePrenda, pr.precio, pr.estadoPago, pr.estadoVendido, pr.fechaPago from prenda pr left join proovedores p on pr.idProovedor = p.id where p.nombre='"+nombre+"' order by pr.nombrePrenda ASC";
 		try {
 			PreparedStatement ps = null;
 			ResultSet rs = null;
 			Connection con = conexion.getConexion();
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
-			Object[] prenda = new Object[5];
+			Object[] prenda = new Object[6];
 			DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
 			rs = ps.executeQuery(sql);
 			while (rs.next()) {
@@ -137,12 +138,25 @@ public class Modelo {
 				case 1: prenda[3] = "VENDIDO"; break;
 				}
 				prenda[4] = rs.getInt("pr.id");
+				if (rs.getDate("pr.fechaPago")!=null){
+					String fecha = rs.getDate("pr.fechaPago").toString();
+					String fechas[]=fecha.split("-");
+					
+					String fechaDMA = fechas[2]+"/"+fechas[1]+"/"+fechas[0];
+
+				
+					prenda[5] = fechaDMA;
+
+				}else {
+					prenda[5]=rs.getDate("pr.fechaPago");
+				}
+				
 				modelo.addRow(prenda);
 			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-	} 
+	}  
 	public void listarPrendasPorNombreID(JTable tabla, String nombre) {
 		limpiarTabla(tabla);
 		String sql = "select pr.id, pr.nombrePrenda, pr.precio, pr.estadoPago, pr.estadoVendido, pr.fechaPago from prenda pr left join proovedores p on pr.idProovedor = p.id where p.nombre='"+nombre+"' order by pr.id ASC";
@@ -169,7 +183,19 @@ public class Modelo {
 				case 1: prenda[3] = "VENDIDO"; break;
 				}
 				prenda[4] = rs.getInt("pr.id");
-				prenda[5] = rs.getString("pr.fechaPago");
+				if (rs.getDate("pr.fechaPago")!=null){
+					String fecha = rs.getDate("pr.fechaPago").toString();
+					String fechas[]=fecha.split("-");
+					
+					String fechaDMA = fechas[2]+"/"+fechas[1]+"/"+fechas[0];
+
+				
+					prenda[5] = fechaDMA;
+
+				}else {
+					prenda[5]=rs.getDate("pr.fechaPago");
+				}
+				
 				modelo.addRow(prenda);
 			}
 		} catch (Exception e) {
@@ -202,7 +228,19 @@ public class Modelo {
 				case 1: prenda[3] = "VENDIDO"; break;
 				}
 				prenda[4] = rs.getInt("pr.id");
-				prenda[5] = rs.getDate("pr.fechaPago");
+				if (rs.getDate("pr.fechaPago")!=null){
+					String fecha = rs.getDate("pr.fechaPago").toString();
+					String fechas[]=fecha.split("-");
+					
+					String fechaDMA = fechas[2]+"/"+fechas[1]+"/"+fechas[0];
+
+				
+					prenda[5] = fechaDMA;
+
+				}else {
+					prenda[5]=rs.getDate("pr.fechaPago");
+				}
+				
 				modelo.addRow(prenda);
 			}
 		} catch (Exception e) {
@@ -235,7 +273,64 @@ public class Modelo {
 				case 1: prenda[3] = "VENDIDO"; break;
 				}
 				prenda[4] = rs.getInt("pr.id");
-				prenda[5] = rs.getDate("pr.fechaPago");
+				if (rs.getDate("pr.fechaPago")!=null){
+					String fecha = rs.getDate("pr.fechaPago").toString();
+					String fechas[]=fecha.split("-");
+					
+					String fechaDMA = fechas[2]+"/"+fechas[1]+"/"+fechas[0];
+
+				
+					prenda[5] = fechaDMA;
+
+				}else {
+					prenda[5]=rs.getDate("pr.fechaPago");
+				}
+				
+				modelo.addRow(prenda);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	} 
+	public void listarPrendasPorNombreFechaPago(JTable tabla, String nombre) {
+		limpiarTabla(tabla);
+		String sql = "select pr.id, pr.nombrePrenda, pr.precio, pr.estadoPago, pr.estadoVendido, pr.fechaPago from prenda pr left join proovedores p on pr.idProovedor = p.id where p.nombre='"+nombre+"' order by pr.fechaPago DESC";
+		try {
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			Connection con = conexion.getConexion();
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			Object[] prenda = new Object[6];
+			DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+			rs = ps.executeQuery(sql);
+			while (rs.next()) {
+				prenda[0] = rs.getString("pr.nombrePrenda");
+				prenda[1] = "$" + rs.getFloat("pr.precio");
+				int estadoPago = rs.getInt("pr.estadoPago");
+				switch(estadoPago) {
+				case 0: prenda[2] = "NO PAGO"; break;
+				case 1: prenda[2] = "PAGADO"; break;
+				}
+				int estadoVendido = rs.getInt("pr.estadoVendido");
+				switch(estadoVendido) {
+				case 0: prenda[3] = "NO VENDIDO"; break;
+				case 1: prenda[3] = "VENDIDO"; break;
+				}
+				prenda[4] = rs.getInt("pr.id");
+				if (rs.getDate("pr.fechaPago")!=null){
+					String fecha = rs.getDate("pr.fechaPago").toString();
+					String fechas[]=fecha.split("-");
+					
+					String fechaDMA = fechas[2]+"/"+fechas[1]+"/"+fechas[0];
+
+				
+					prenda[5] = fechaDMA;
+
+				}else {
+					prenda[5]=rs.getDate("pr.fechaPago");
+				}
+				
 				modelo.addRow(prenda);
 			}
 		} catch (Exception e) {
@@ -475,7 +570,6 @@ public class Modelo {
 	}
 	public boolean setearFecha(int id) {
 		LocalDate Fecha = LocalDate.now();
-		System.out.println(Fecha);
 		String sql="update prenda set fechaPago= '"+Fecha+"' where id="+id;
 		try {
 			Connection con = conexion.getConexion();
@@ -490,7 +584,6 @@ public class Modelo {
 	}
 	public boolean setearFechaNull(int id) {
 		LocalDate Fecha = LocalDate.now();
-		System.out.println(Fecha);
 		String sql="update prenda set fechaPago= null where id="+id;
 		try {
 			Connection con = conexion.getConexion();
