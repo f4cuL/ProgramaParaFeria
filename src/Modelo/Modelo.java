@@ -436,6 +436,28 @@ public class Modelo {
 		}
 		return false;
 	}
+	public boolean fechaNull(int id) {
+		String sql="select fechaPago from prenda where id="+id;
+		try {
+			Connection con = conexion.getConexion();
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery(sql);
+			Date fecha;
+			while(rs.next())
+			{
+			 if(rs.getDate("fechaPago")==null) {
+				 return true;
+			 }else {
+				 return false;
+			 }
+			}
+		}catch (Exception e){
+			System.out.println(e);
+		}
+		return false;
+	}
 	
 	public boolean agregarPrenda(String nombre, int precio, int idProovedor) {
 		String sql= "insert into prenda(id,nombrePrenda,precio,estadoPago,estadoVendido,idProovedor) values (NULL,'"+nombre+"',"+precio+",0,0,"+idProovedor+")";
@@ -455,6 +477,21 @@ public class Modelo {
 		LocalDate Fecha = LocalDate.now();
 		System.out.println(Fecha);
 		String sql="update prenda set fechaPago= '"+Fecha+"' where id="+id;
+		try {
+			Connection con = conexion.getConexion();
+			PreparedStatement ps = null;
+			ps = con.prepareStatement(sql);
+			ps.execute(sql);
+		}catch (Exception e){
+			System.out.println(e);
+			return false;
+		}
+		return true;
+	}
+	public boolean setearFechaNull(int id) {
+		LocalDate Fecha = LocalDate.now();
+		System.out.println(Fecha);
+		String sql="update prenda set fechaPago= null where id="+id;
 		try {
 			Connection con = conexion.getConexion();
 			PreparedStatement ps = null;

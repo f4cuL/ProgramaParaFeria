@@ -97,7 +97,11 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 				}
 				else {
 				controlador.getModelo().setPagoTrueFalse(Integer.parseInt(controlador.getModelo().tomarIdTabla(tablaPrendas)));
-				controlador.getModelo().setearFecha(Integer.parseInt(controlador.getModelo().tomarIdTabla(tablaPrendas)));
+				if (controlador.getModelo().fechaNull(Integer.parseInt(controlador.getModelo().tomarIdTabla(tablaPrendas)))){
+					controlador.getModelo().setearFecha(Integer.parseInt(controlador.getModelo().tomarIdTabla(tablaPrendas)));
+				}else {
+					controlador.getModelo().setearFechaNull(Integer.parseInt(controlador.getModelo().tomarIdTabla(tablaPrendas)));
+				}
 				controlador.getModelo().limpiarTabla(tablaPrendas);
 				controlador.getModelo().listarPrendasPorNombreEstadoPago(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));			
 				}
