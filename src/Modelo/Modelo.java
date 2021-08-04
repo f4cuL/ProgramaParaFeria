@@ -2,9 +2,11 @@ package Modelo;
 
 import java.awt.Dimension;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
@@ -87,9 +89,31 @@ public class Modelo {
 			System.out.println(e);
 		}
 	}
+	public void listarProovedoresPorNombre(JTable tabla) {
+		limpiarTabla(tabla);
+		String sql = "select p.nombre, p.codigo from proovedores p group by p.nombre order by p.nombre ASC";
+		try {
+			PreparedStatement ps = null; 
+			ResultSet rs = null;
+			Connection con = conexion.getConexion();
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			Object[] proovedor = new Object[3];
+			DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+			rs = ps.executeQuery(sql);
+			while (rs.next()) {
+				proovedor[0] = rs.getString("p.nombre");
+				proovedor[1] = rs.getString("codigo");
+				proovedor[2] = "$"+obtenerTotalPagar(rs.getString("codigo"));
+				modelo.addRow(proovedor);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
 	public void listarPrendasPorNombre(JTable tabla, String nombre) {
 		limpiarTabla(tabla);
-		String sql = "select pr.id, pr.nombrePrenda, pr.precio, pr.estadoPago, pr.estadoVendido from prenda pr left join proovedores p on pr.idProovedor = p.id where p.nombre='"+nombre+"'";
+		String sql = "select pr.id, pr.nombrePrenda, pr.precio, pr.estadoPago, pr.estadoVendido from prenda pr left join proovedores p on pr.idProovedor = p.id where p.nombre='"+nombre+"' order by pr.nombrePrenda ASC";
 		try {
 			PreparedStatement ps = null;
 			ResultSet rs = null;
@@ -119,6 +143,106 @@ public class Modelo {
 			System.out.println(e);
 		}
 	} 
+	public void listarPrendasPorNombreID(JTable tabla, String nombre) {
+		limpiarTabla(tabla);
+		String sql = "select pr.id, pr.nombrePrenda, pr.precio, pr.estadoPago, pr.estadoVendido, pr.fechaPago from prenda pr left join proovedores p on pr.idProovedor = p.id where p.nombre='"+nombre+"' order by pr.id ASC";
+		try {
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			Connection con = conexion.getConexion();
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			Object[] prenda = new Object[6];
+			DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+			rs = ps.executeQuery(sql);
+			while (rs.next()) {
+				prenda[0] = rs.getString("pr.nombrePrenda");
+				prenda[1] = "$" + rs.getFloat("pr.precio");
+				int estadoPago = rs.getInt("pr.estadoPago");
+				switch(estadoPago) {
+				case 0: prenda[2] = "NO PAGO"; break;
+				case 1: prenda[2] = "PAGADO"; break;
+				}
+				int estadoVendido = rs.getInt("pr.estadoVendido");
+				switch(estadoVendido) {
+				case 0: prenda[3] = "NO VENDIDO"; break;
+				case 1: prenda[3] = "VENDIDO"; break;
+				}
+				prenda[4] = rs.getInt("pr.id");
+				prenda[5] = rs.getString("pr.fechaPago");
+				modelo.addRow(prenda);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	} 
+	public void listarPrendasPorNombreEstadoPago(JTable tabla, String nombre) {
+		limpiarTabla(tabla);
+		String sql = "select pr.id, pr.nombrePrenda, pr.precio, pr.estadoPago, pr.estadoVendido, pr.fechaPago from prenda pr left join proovedores p on pr.idProovedor = p.id where p.nombre='"+nombre+"' order by pr.estadoVendido=1 and estadoPago=0 DESC";
+		try {
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			Connection con = conexion.getConexion();
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			Object[] prenda = new Object[6];
+			DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+			rs = ps.executeQuery(sql);
+			while (rs.next()) {
+				prenda[0] = rs.getString("pr.nombrePrenda");
+				prenda[1] = "$" + rs.getFloat("pr.precio");
+				int estadoPago = rs.getInt("pr.estadoPago");
+				switch(estadoPago) {
+				case 0: prenda[2] = "NO PAGO"; break;
+				case 1: prenda[2] = "PAGADO"; break;
+				}
+				int estadoVendido = rs.getInt("pr.estadoVendido");
+				switch(estadoVendido) {
+				case 0: prenda[3] = "NO VENDIDO"; break;
+				case 1: prenda[3] = "VENDIDO"; break;
+				}
+				prenda[4] = rs.getInt("pr.id");
+				prenda[5] = rs.getDate("pr.fechaPago");
+				modelo.addRow(prenda);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	} 
+	public void listarPrendasPorNombreEstadoPagoFull(JTable tabla, String nombre) {
+		limpiarTabla(tabla);
+		String sql = "select pr.id, pr.nombrePrenda, pr.precio, pr.estadoPago, pr.estadoVendido, pr.fechaPago from prenda pr left join proovedores p on pr.idProovedor = p.id where p.nombre='"+nombre+"' order by pr.estadoVendido=1 and estadoPago=1 DESC";
+		try {
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			Connection con = conexion.getConexion();
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			Object[] prenda = new Object[6];
+			DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+			rs = ps.executeQuery(sql);
+			while (rs.next()) {
+				prenda[0] = rs.getString("pr.nombrePrenda");
+				prenda[1] = "$" + rs.getFloat("pr.precio");
+				int estadoPago = rs.getInt("pr.estadoPago");
+				switch(estadoPago) {
+				case 0: prenda[2] = "NO PAGO"; break;
+				case 1: prenda[2] = "PAGADO"; break;
+				}
+				int estadoVendido = rs.getInt("pr.estadoVendido");
+				switch(estadoVendido) {
+				case 0: prenda[3] = "NO VENDIDO"; break;
+				case 1: prenda[3] = "VENDIDO"; break;
+				}
+				prenda[4] = rs.getInt("pr.id");
+				prenda[5] = rs.getDate("pr.fechaPago");
+				modelo.addRow(prenda);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	} 
+	
 
 	public boolean agregarProovedor(String nombre,String codigo) {
 		String sql="insert into proovedores(nombre,codigo) values('"+nombre+"','"+codigo+"')";
@@ -184,7 +308,7 @@ public class Modelo {
 		return true;
 	}
 	public int obtenerTotalPagar(String codigo) {
-		String sql = "select sum(pr.precio) as suma from prenda pr inner join proovedores p on p.id=pr.idProovedor where p.codigo='"+codigo+"' and pr.estadoPago=0";
+		String sql = "select sum(pr.precio) as suma from prenda pr inner join proovedores p on p.id=pr.idProovedor where p.codigo='"+codigo+"' and pr.estadoPago=0 and pr.estadoVendido=1";
 		try {
 			PreparedStatement ps = null;
 			ResultSet rs = null;
@@ -327,6 +451,21 @@ public class Modelo {
 		
 		return true;
 	}
-	
+	public boolean setearFecha(int id) {
+		LocalDate Fecha = LocalDate.now();
+		System.out.println(Fecha);
+		String sql="update prenda set fechaPago= '"+Fecha+"' where id="+id;
+		try {
+			Connection con = conexion.getConexion();
+			PreparedStatement ps = null;
+			ps = con.prepareStatement(sql);
+			ps.execute(sql);
+		}catch (Exception e){
+			System.out.println(e);
+			return false;
+		}
+		return true;
+	}
+
 	
 }

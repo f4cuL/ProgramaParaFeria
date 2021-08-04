@@ -7,6 +7,8 @@ import java.awt.Font;
 import javax.swing.JInternalFrame;
 
 import Controlador.Controlador;
+import Modelo.colorCelda;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTable;
@@ -23,6 +25,7 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
 
 import javax.swing.SwingConstants;
+import java.awt.SystemColor;
 
 public class mostrarProovedorPrendas extends JInternalFrame {
 	Controlador controlador;
@@ -94,8 +97,9 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 				}
 				else {
 				controlador.getModelo().setPagoTrueFalse(Integer.parseInt(controlador.getModelo().tomarIdTabla(tablaPrendas)));
+				controlador.getModelo().setearFecha(Integer.parseInt(controlador.getModelo().tomarIdTabla(tablaPrendas)));
 				controlador.getModelo().limpiarTabla(tablaPrendas);
-				controlador.getModelo().listarPrendasPorNombre(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));			
+				controlador.getModelo().listarPrendasPorNombreEstadoPago(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));			
 				}
 			}
 		});
@@ -163,7 +167,7 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 				else {
 				controlador.getModelo().setVendidoTrueFalse(Integer.parseInt(controlador.getModelo().tomarIdTabla(tablaPrendas)));
 				controlador.getModelo().limpiarTabla(tablaPrendas);
-				controlador.getModelo().listarPrendasPorNombre(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));			
+				controlador.getModelo().listarPrendasPorNombreEstadoPago(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));			
 				}
 			}
 		});
@@ -184,7 +188,7 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 				else {
 					controlador.getModelo().cambiarNombrePrenda(nombre, controlador.getModelo().tomarIdTabla(tablaPrendas));
 					controlador.getModelo().limpiarTabla(tablaPrendas);
-					controlador.getModelo().listarPrendasPorNombre(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
+					controlador.getModelo().listarPrendasPorNombreEstadoPago(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
 				}
 
 			}}
@@ -206,7 +210,7 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 					try {
 						controlador.getModelo().cambiarPrecioPrenda(Integer.parseInt(nombre), controlador.getModelo().tomarIdTabla(tablaPrendas));
 						controlador.getModelo().limpiarTabla(tablaPrendas);
-						controlador.getModelo().listarPrendasPorNombre(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));					} catch (Exception e2) {
+						controlador.getModelo().listarPrendasPorNombreEstadoPago(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));					} catch (Exception e2) {
 						JOptionPane.showMessageDialog(null, "TIENE QUE SER UN NUMERO",
 				                "ERROR", JOptionPane.ERROR_MESSAGE);
 					}
@@ -216,15 +220,51 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 			}
 			}
 		});
+		
+		JButton btnNewButton_6 = new JButton("Ordenar alfabeticamente");
+		btnNewButton_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controlador.getModelo().listarPrendasPorNombre(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
+			}
+		});
+		btnNewButton_6.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		btnNewButton_6.setForeground(SystemColor.textHighlight);
+		
+		JButton btnNewButton_7 = new JButton("Ordenar por ID");
+		btnNewButton_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controlador.getModelo().listarPrendasPorNombreID(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
+			}
+		});
+		btnNewButton_7.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		btnNewButton_7.setForeground(SystemColor.textHighlight);
+		
+		JButton btnNewButton_8 = new JButton("Ordenar por vendido sin pagar");
+		btnNewButton_8.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controlador.getModelo().listarPrendasPorNombreEstadoPago(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
+			}
+		});
+		btnNewButton_8.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		btnNewButton_8.setForeground(SystemColor.textHighlight);
+		
+		JButton btnNewButton_8_1 = new JButton("Ordenar por vendido y pagado");
+		btnNewButton_8_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controlador.getModelo().listarPrendasPorNombreEstadoPagoFull(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
+				
+			}
+		});
+		btnNewButton_8_1.setForeground(SystemColor.textHighlight);
+		btnNewButton_8_1.setFont(new Font("Tahoma", Font.ITALIC, 11));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
+							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 								.addComponent(btnNewButton_5, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -235,8 +275,20 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 								.addComponent(btnNewButton_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(btnNewButton)
-							.addPreferredGap(ComponentPlacement.RELATED, 347, Short.MAX_VALUE)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnNewButton)
+								.addComponent(btnNewButton_6))
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnNewButton_7)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnNewButton_8)
+									.addPreferredGap(ComponentPlacement.RELATED, 7, Short.MAX_VALUE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnNewButton_8_1, GroupLayout.PREFERRED_SIZE, 221, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.UNRELATED)))
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(btnNewButton_2)
 								.addGroup(groupLayout.createSequentialGroup()
@@ -244,6 +296,10 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 									.addGap(18)
 									.addComponent(btnCambiarCodigo)))))
 					.addContainerGap())
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE)
+					.addGap(19))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -267,13 +323,18 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnCambiarCodigo)
 						.addComponent(btnNewButton)
-						.addComponent(btnCambiarNombre))
+						.addComponent(btnCambiarNombre)
+						.addComponent(btnNewButton_8_1))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnNewButton_2)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnNewButton_2)
+						.addComponent(btnNewButton_6)
+						.addComponent(btnNewButton_7)
+						.addComponent(btnNewButton_8))
 					.addContainerGap(30, Short.MAX_VALUE))
 		);
 		
-		tablaPrendas = new JTable() {
+		tablaPrendas = new colorCelda() {
 			public boolean isCellEditable(int row, int column){  
 		          return false;  
 		      }
@@ -287,7 +348,7 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"Nombre prenda", "Precio", "Estado pago", "Estado vendido", "ID"
+				"Nombre prenda", "Precio", "Estado pago", "Estado vendido","ID","Fecha pago"
 			}
 		));
 		scrollPane.setViewportView(tablaPrendas);

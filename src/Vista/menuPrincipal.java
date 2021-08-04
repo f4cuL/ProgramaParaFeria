@@ -20,6 +20,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
@@ -131,13 +132,16 @@ public class menuPrincipal {
 		JMenuItem mntmNewMenuItem = new JMenuItem("Test bdd");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controlador.getModelo().agregarPrenda("Poronga", 500,2);
+				controlador.getModelo().setearFecha(1);
 			}
 		});
 		mnNewMenu.add(mntmNewMenuItem);
 		
-		JMenu mnNewMenu_1 = new JMenu("New menu");
+		JMenu mnNewMenu_1 = new JMenu("Prendas");
 		menuBar.add(mnNewMenu_1);
+		
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Buscar prenda por nombre");
+		mnNewMenu_1.add(mntmNewMenuItem_2);
 		
 		JMenu mnNewMenu_2 = new JMenu("New menu");
 		menuBar.add(mnNewMenu_2);

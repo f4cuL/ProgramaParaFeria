@@ -37,6 +37,8 @@ public class proovedores extends JInternalFrame {
 	int contador = 0;
 	JButton btnAgregarProovedor;
 	JButton btnMpp;
+	private JButton btnNewButton;
+	private JButton btnNewButton_1;
 	public JButton getBtnMpp() {
 		return btnMpp;
 	}
@@ -86,7 +88,7 @@ public class proovedores extends JInternalFrame {
 		});
 		
 		setTitle("Proovedores");
-		setBounds(100, 100, 744, 596);
+		setBounds(100, 100, 744, 622);
 		setVisible(true);
 		setClosable(true);
 		
@@ -229,31 +231,57 @@ public class proovedores extends JInternalFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				Controlador.getModelo().listarPrendasPorNombre(Controlador.getMostrarProovedorPrendas().getTablaPrendas(),Controlador.getModelo().tomarNombreTabla(table));
+				Controlador.getModelo().listarPrendasPorNombreEstadoPago(Controlador.getMostrarProovedorPrendas().getTablaPrendas(),Controlador.getModelo().tomarNombreTabla(table));
 			}}
+		});
+		
+		btnNewButton = new JButton("Ordenar por orden alfab\u00E9tico");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Controlador.getModelo().listarProovedoresPorNombre(table);
+			}
+		});
+		
+		btnNewButton_1 = new JButton("Ordenar por c\u00F3digo");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Controlador.getModelo().listarProovedores(table);
+			}
 		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 728, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(44)
 							.addComponent(btnAgregarProovedor, GroupLayout.PREFERRED_SIZE, 173, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnMpp)))
+							.addComponent(btnMpp))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 728, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(btnNewButton)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnNewButton_1)))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnNewButton)
+						.addComponent(btnNewButton_1))
+					.addGap(3)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 486, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnMpp, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnAgregarProovedor, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(162, Short.MAX_VALUE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(groupLayout);
 		
