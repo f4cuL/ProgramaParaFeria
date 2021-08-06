@@ -232,6 +232,7 @@ public class proovedores extends JInternalFrame {
 					e1.printStackTrace();
 				}
 				Controlador.getModelo().listarPrendasPorNombreEstadoPago(Controlador.getMostrarProovedorPrendas().getTablaPrendas(),Controlador.getModelo().tomarNombreTabla(table));
+				Controlador.getModelo().resizeColumnWidth(Controlador.getMostrarProovedorPrendas().getTablaPrendas());
 			}}
 		});
 		

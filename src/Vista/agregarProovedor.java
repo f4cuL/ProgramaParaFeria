@@ -76,7 +76,7 @@ public class agregarProovedor extends JInternalFrame {
 					} else {
 						if (JOptionPane.showConfirmDialog(null,
 								"¿Estás seguro que deseas agregar a " + inputNombre.getText() + "?",
-								"AVISO: Estás agrengado un nuevo proovedor", JOptionPane.YES_NO_OPTION,
+								"AVISO: Estás agregando un nuevo proovedor", JOptionPane.YES_NO_OPTION,
 								JOptionPane.WARNING_MESSAGE) == 0) {
 
 							controlador.getModelo().agregarProovedor(inputNombre.getText(), inptCodigo.getText());

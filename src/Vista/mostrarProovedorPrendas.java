@@ -26,6 +26,9 @@ import java.beans.PropertyVetoException;
 
 import javax.swing.SwingConstants;
 import java.awt.SystemColor;
+import javax.swing.JPanel;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.BevelBorder;
 
 public class mostrarProovedorPrendas extends JInternalFrame {
 	Controlador controlador;
@@ -50,7 +53,7 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public mostrarProovedorPrendas(Controlador controlador) {
-		setBounds(100, 100, 1236, 525);
+		setBounds(100, 100, 1236, 594);
 		setControlador(controlador);
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.addMouseListener(new MouseAdapter() {
@@ -86,29 +89,42 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 			}
 		});
 		setTitle("Proovedor "+controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
-		JButton btnNewButton_1 = new JButton("Cambiar estado de pago");
-		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnNewButton_1.setForeground(Color.BLUE);
-		btnNewButton_1.addActionListener(new ActionListener() {
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		
+		JLabel lblNewLabel_1 = new JLabel("Ordenamiento de prendas");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 11));
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		
+		JLabel lblNewLabel_2 = new JLabel("Edici\u00F3n del proovedor");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 11));
+		
+		JButton btnCambiarNombre = new JButton("Cambiar nombre proovedor");
+		panel_1.add(btnCambiarNombre);
+		JButton btnCambiarCodigo = new JButton("Cambiar codigo");
+		panel_1.add(btnCambiarCodigo);
+		
+		btnCambiarCodigo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (tablaPrendas.getSelectionModel().isSelectionEmpty()) {
-					JOptionPane.showMessageDialog(null, "DEBES SELECCIONAR UNA PRENDA PRIMERO",
-			                "ERROR", JOptionPane.ERROR_MESSAGE);				
-				}
-				else {
-				controlador.getModelo().setPagoTrueFalse(Integer.parseInt(controlador.getModelo().tomarIdTabla(tablaPrendas)));
-				if (controlador.getModelo().fechaNull(Integer.parseInt(controlador.getModelo().tomarIdTabla(tablaPrendas)))){
-					controlador.getModelo().setearFecha(Integer.parseInt(controlador.getModelo().tomarIdTabla(tablaPrendas)));
+				String codigo = JOptionPane.showInputDialog("Ingrese nuevo codigo(Cambiar el codigo cerrará esta pestaña)");
+				if (controlador.getModelo().codigoRepetido(codigo)){
+					JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio, ya existe otro proovedor con ese codigo", "Error", JOptionPane.WARNING_MESSAGE);
 				}else {
-					controlador.getModelo().setearFechaNull(Integer.parseInt(controlador.getModelo().tomarIdTabla(tablaPrendas)));
-				}
-				controlador.getModelo().limpiarTabla(tablaPrendas);
-				controlador.getModelo().listarPrendasPorNombreEstadoPago(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));			
+				if (codigo==null || codigo.equals("")){
+					JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio", "Error", JOptionPane.WARNING_MESSAGE);
+				}else {
+					controlador.getModelo().cambiarCodigo(codigo, controlador.getModelo().tomarCodigoTabla(controlador.getProovedores().getTable()));
+					dispose();
 				}
 			}
+		}
 		});
 		
 		JButton btnNewButton_2 = new JButton("Borrar proovedor");
+		panel_1.add(btnNewButton_2);
 		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnNewButton_2.setForeground(Color.RED); 
 		btnNewButton_2.addActionListener(new ActionListener() {
@@ -122,9 +138,6 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 			}
 			}
 		});
-		
-		JButton btnCambiarNombre = new JButton("Cambiar nombre proovedor");
-		JButton btnCambiarCodigo = new JButton("Cambiar codigo");
 		btnCambiarNombre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nombre = JOptionPane.showInputDialog("Ingrese nuevo nombre");
@@ -143,63 +156,139 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 			}
 		});
 		
-		btnCambiarCodigo.addActionListener(new ActionListener() {
+		JButton btnNewButton_6 = new JButton("Ordenar alfabeticamente");
+		panel.add(btnNewButton_6);
+		btnNewButton_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String codigo = JOptionPane.showInputDialog("Ingrese nuevo codigo(Cambiar el codigo cerrará esta pestaña)");
-				if (controlador.getModelo().codigoRepetido(codigo)){
-					JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio, ya existe otro proovedor con ese codigo", "Error", JOptionPane.WARNING_MESSAGE);
-				}else {
-				if (codigo==null || codigo.equals("")){
-					JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio", "Error", JOptionPane.WARNING_MESSAGE);
-				}else {
-					controlador.getModelo().cambiarCodigo(codigo, controlador.getModelo().tomarCodigoTabla(controlador.getProovedores().getTable()));
-					dispose();
-				}
+				controlador.getModelo().listarPrendasPorNombre(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
 			}
-		}
 		});
+		btnNewButton_6.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		btnNewButton_6.setForeground(SystemColor.textHighlight);
 		
-		JButton btnNewButton_3 = new JButton("Cambiar estado de venta\r\n");
-		btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnNewButton_3.setForeground(new Color(220, 20, 60));
-		btnNewButton_3.addActionListener(new ActionListener() {
+		JButton btnNewButton_7 = new JButton("Ordenar por ID");
+		panel.add(btnNewButton_7);
+		btnNewButton_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (tablaPrendas.getSelectionModel().isSelectionEmpty()) {
-					JOptionPane.showMessageDialog(null, "DEBES SELECCIONAR UNA PRENDA PRIMERO",
-			                "ERROR", JOptionPane.ERROR_MESSAGE);				
-				}
-				else {
-				controlador.getModelo().setVendidoTrueFalse(Integer.parseInt(controlador.getModelo().tomarIdTabla(tablaPrendas)));
-				controlador.getModelo().limpiarTabla(tablaPrendas);
-				controlador.getModelo().listarPrendasPorNombreEstadoPago(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));			
-				}
+				controlador.getModelo().listarPrendasPorNombreID(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
 			}
 		});
+		btnNewButton_7.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		btnNewButton_7.setForeground(SystemColor.textHighlight);
+		
+		JButton btnNewButton_8 = new JButton("Ordenar por vendido sin pagar");
+		panel.add(btnNewButton_8);
+		btnNewButton_8.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controlador.getModelo().listarPrendasPorNombreEstadoPago(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
+			}
+		});
+		btnNewButton_8.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		btnNewButton_8.setForeground(SystemColor.textHighlight);
+		
+		JButton btnNewButton_8_1 = new JButton("Ordenar por vendido y pagado");
+		panel.add(btnNewButton_8_1);
+		btnNewButton_8_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controlador.getModelo().listarPrendasPorNombreEstadoPagoFull(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
+				
+			}
+		});
+		btnNewButton_8_1.setForeground(SystemColor.textHighlight);
+		btnNewButton_8_1.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		
+		JButton btnNewButton_8_1_1 = new JButton("Ordenar por fecha pago");
+		panel.add(btnNewButton_8_1_1);
+		btnNewButton_8_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controlador.getModelo().listarPrendasPorNombreFechaPago(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
+				
+			}
+		});
+		btnNewButton_8_1_1.setForeground(SystemColor.textHighlight);
+		btnNewButton_8_1_1.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		
+		tablaPrendas = new colorCelda() {
+			public boolean isCellEditable(int row, int column){  
+		          return false;  
+		      }
+		};
+		tablaPrendas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
+		tablaPrendas.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Nombre prenda", "Precio", "Estado pago", "Estado vendido","ID","Fecha pago"
+			}
+		));
+		scrollPane.setViewportView(tablaPrendas);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		
+		JLabel lblNewLabel_3 = new JLabel("Edici\u00F3n de prenda");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 11));
+		GroupLayout groupLayout = new GroupLayout(getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+							.addGroup(groupLayout.createSequentialGroup()
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+									.addComponent(btnNewButton)
+									.addComponent(lblNewLabel_1)
+									.addComponent(panel, GroupLayout.PREFERRED_SIZE, 826, GroupLayout.PREFERRED_SIZE))
+								.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+									.addComponent(lblNewLabel_2)
+									.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 280, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(scrollPane, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 1191, GroupLayout.PREFERRED_SIZE))
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 567, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 229, Short.MAX_VALUE)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblNewLabel_3)
+								.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 404, GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addComponent(lblNewLabel_3)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
+							.addGap(16))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)))
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 321, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(btnNewButton)
+							.addGap(14)
+							.addComponent(lblNewLabel_1)
+							.addGap(4)
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblNewLabel_2)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))))
+		);
 		
 		JButton btnNewButton_4 = new JButton("Cambiar nombre prenda");
-		btnNewButton_4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (tablaPrendas.getSelectionModel().isSelectionEmpty()) {
-					JOptionPane.showMessageDialog(null, "DEBES SELECCIONAR UNA PRENDA PRIMERO",
-			                "ERROR", JOptionPane.ERROR_MESSAGE);				
-				}
-				else
-				{	
-				DefaultTableModel tm = (DefaultTableModel) tablaPrendas.getModel();
-				String nombre = JOptionPane.showInputDialog(null,"<html>Ingrese nuevo nombre para <b> "+ String.valueOf(tm.getValueAt(tablaPrendas.getSelectedRow(),0)) + "</b></html>");
-				if (nombre==null || nombre.equals("")){
-					JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio", "Error", JOptionPane.WARNING_MESSAGE);
-				}
-				else {
-					controlador.getModelo().cambiarNombrePrenda(nombre, controlador.getModelo().tomarIdTabla(tablaPrendas));
-					controlador.getModelo().limpiarTabla(tablaPrendas);
-					controlador.getModelo().listarPrendasPorNombreEstadoPago(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
-				}
-
-			}}
-		});
+		panel_2.add(btnNewButton_4);
 		
 		JButton btnNewButton_5 = new JButton("Cambiar precio prenda");
+		panel_2.add(btnNewButton_5);
 		btnNewButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (tablaPrendas.getSelectionModel().isSelectionEmpty()) {
@@ -226,148 +315,67 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 			}
 			}
 		});
+		JButton btnNewButton_1 = new JButton("Cambiar estado de pago");
+		panel_2.add(btnNewButton_1);
+		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnNewButton_1.setForeground(Color.BLUE);
 		
-		JButton btnNewButton_6 = new JButton("Ordenar alfabeticamente");
-		btnNewButton_6.addActionListener(new ActionListener() {
+		JButton btnNewButton_3 = new JButton("Cambiar estado de venta\r\n");
+		panel_2.add(btnNewButton_3);
+		btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnNewButton_3.setForeground(new Color(220, 20, 60));
+		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controlador.getModelo().listarPrendasPorNombre(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
+				if (tablaPrendas.getSelectionModel().isSelectionEmpty()) {
+					JOptionPane.showMessageDialog(null, "DEBES SELECCIONAR UNA PRENDA PRIMERO",
+			                "ERROR", JOptionPane.ERROR_MESSAGE);				
+				}
+				else {
+				controlador.getModelo().setVendidoTrueFalse(Integer.parseInt(controlador.getModelo().tomarIdTabla(tablaPrendas)));
+				controlador.getModelo().limpiarTabla(tablaPrendas);
+				controlador.getModelo().listarPrendasPorNombreEstadoPago(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));			
+				}
 			}
 		});
-		btnNewButton_6.setFont(new Font("Tahoma", Font.ITALIC, 11));
-		btnNewButton_6.setForeground(SystemColor.textHighlight);
-		
-		JButton btnNewButton_7 = new JButton("Ordenar por ID");
-		btnNewButton_7.addActionListener(new ActionListener() {
+		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controlador.getModelo().listarPrendasPorNombreID(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
+				if (tablaPrendas.getSelectionModel().isSelectionEmpty()) {
+					JOptionPane.showMessageDialog(null, "DEBES SELECCIONAR UNA PRENDA PRIMERO",
+			                "ERROR", JOptionPane.ERROR_MESSAGE);				
+				}
+				else {
+				controlador.getModelo().setPagoTrueFalse(Integer.parseInt(controlador.getModelo().tomarIdTabla(tablaPrendas)));
+				if (controlador.getModelo().fechaNull(Integer.parseInt(controlador.getModelo().tomarIdTabla(tablaPrendas)))){
+					controlador.getModelo().setearFecha(Integer.parseInt(controlador.getModelo().tomarIdTabla(tablaPrendas)));
+				}else {
+					controlador.getModelo().setearFechaNull(Integer.parseInt(controlador.getModelo().tomarIdTabla(tablaPrendas)));
+				}
+				controlador.getModelo().limpiarTabla(tablaPrendas);
+				controlador.getModelo().listarPrendasPorNombreEstadoPago(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));			
+				}
 			}
 		});
-		btnNewButton_7.setFont(new Font("Tahoma", Font.ITALIC, 11));
-		btnNewButton_7.setForeground(SystemColor.textHighlight);
-		
-		JButton btnNewButton_8 = new JButton("Ordenar por vendido sin pagar");
-		btnNewButton_8.addActionListener(new ActionListener() {
+		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controlador.getModelo().listarPrendasPorNombreEstadoPago(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
-			}
+				if (tablaPrendas.getSelectionModel().isSelectionEmpty()) {
+					JOptionPane.showMessageDialog(null, "DEBES SELECCIONAR UNA PRENDA PRIMERO",
+			                "ERROR", JOptionPane.ERROR_MESSAGE);				
+				}
+				else
+				{	
+				DefaultTableModel tm = (DefaultTableModel) tablaPrendas.getModel();
+				String nombre = JOptionPane.showInputDialog(null,"<html>Ingrese nuevo nombre para <b> "+ String.valueOf(tm.getValueAt(tablaPrendas.getSelectedRow(),0)) + "</b></html>");
+				if (nombre==null || nombre.equals("")){
+					JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio", "Error", JOptionPane.WARNING_MESSAGE);
+				}
+				else {
+					controlador.getModelo().cambiarNombrePrenda(nombre, controlador.getModelo().tomarIdTabla(tablaPrendas));
+					controlador.getModelo().limpiarTabla(tablaPrendas);
+					controlador.getModelo().listarPrendasPorNombreEstadoPago(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
+				}
+
+			}}
 		});
-		btnNewButton_8.setFont(new Font("Tahoma", Font.ITALIC, 11));
-		btnNewButton_8.setForeground(SystemColor.textHighlight);
-		
-		JButton btnNewButton_8_1 = new JButton("Ordenar por vendido y pagado");
-		btnNewButton_8_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controlador.getModelo().listarPrendasPorNombreEstadoPagoFull(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
-				
-			}
-		});
-		btnNewButton_8_1.setForeground(SystemColor.textHighlight);
-		btnNewButton_8_1.setFont(new Font("Tahoma", Font.ITALIC, 11));
-		
-		JButton btnNewButton_8_1_1 = new JButton("Ordenar por fecha pago");
-		btnNewButton_8_1_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controlador.getModelo().listarPrendasPorNombreFechaPago(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
-				
-			}
-		});
-		btnNewButton_8_1_1.setForeground(SystemColor.textHighlight);
-		btnNewButton_8_1_1.setFont(new Font("Tahoma", Font.ITALIC, 11));
-		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 862, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-										.addComponent(btnNewButton_5, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(btnNewButton_4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-										.addComponent(btnNewButton_3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(btnNewButton_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(btnNewButton)
-										.addComponent(btnNewButton_6))
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(btnNewButton_7)
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addComponent(btnNewButton_8)
-											.addPreferredGap(ComponentPlacement.RELATED, 234, Short.MAX_VALUE)
-											.addComponent(btnNewButton_8_1_1, GroupLayout.PREFERRED_SIZE, 221, GroupLayout.PREFERRED_SIZE))
-										.addComponent(btnNewButton_8_1, GroupLayout.PREFERRED_SIZE, 221, GroupLayout.PREFERRED_SIZE))
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(btnNewButton_2)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(btnCambiarNombre)
-											.addGap(18)
-											.addComponent(btnCambiarCodigo)))))
-							.addContainerGap())
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 1191, Short.MAX_VALUE)
-							.addGap(19))))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(14)
-							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(28)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnNewButton_1)
-								.addComponent(btnNewButton_4))
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnNewButton_3)
-								.addComponent(btnNewButton_5))))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 321, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnCambiarCodigo)
-						.addComponent(btnNewButton)
-						.addComponent(btnCambiarNombre)
-						.addComponent(btnNewButton_8_1))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnNewButton_2)
-						.addComponent(btnNewButton_6)
-						.addComponent(btnNewButton_7)
-						.addComponent(btnNewButton_8)
-						.addComponent(btnNewButton_8_1_1))
-					.addContainerGap(30, Short.MAX_VALUE))
-		);
-		
-		tablaPrendas = new colorCelda() {
-			public boolean isCellEditable(int row, int column){  
-		          return false;  
-		      }
-		};
-		tablaPrendas.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-		tablaPrendas.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Nombre prenda", "Precio", "Estado pago", "Estado vendido","ID","Fecha pago"
-			}
-		));
-		scrollPane.setViewportView(tablaPrendas);
 		getContentPane().setLayout(groupLayout);
 		setVisible(true);
 		setClosable(true);
