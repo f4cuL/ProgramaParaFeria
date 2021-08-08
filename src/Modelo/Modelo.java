@@ -558,6 +558,26 @@ public class Modelo {
 		return false;
 	}
 	
+	public boolean buscarNombre(String palabra) {
+		String sql="select * from prenda where nombrePrenda like'%"+palabra+"%'";
+		try {
+			Connection con = conexion.getConexion();
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery(sql);
+			while(rs.next())
+			{
+				System.out.println("hola");
+				System.out.println(rs.getString("nombrePrenda"));
+			}
+		}catch (Exception e){
+			System.out.println(e);
+		}
+		System.out.println("vacio");
+		return false;
+	}
+	
 	public boolean agregarPrenda(String nombre, int precio, int idProovedor) {
 		String sql= "insert into prenda(id,nombrePrenda,precio,estadoPago,estadoVendido,idProovedor) values (NULL,'"+nombre+"',"+precio+",0,0,"+idProovedor+")";
 		Connection con = conexion.getConexion();

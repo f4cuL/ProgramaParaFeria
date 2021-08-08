@@ -133,6 +133,9 @@ public class menuPrincipal {
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				controlador.getModelo().buscarNombre("azul");
+				System.out.println("hola");
+				
 			}
 		});
 		mnNewMenu.add(mntmNewMenuItem);

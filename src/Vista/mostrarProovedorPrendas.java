@@ -297,6 +297,7 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 				}else
 				{	
 				DefaultTableModel tm = (DefaultTableModel) tablaPrendas.getModel();
+				String numeros[]=String.valueOf(tm.getValueAt(tablaPrendas.getSelectedRow(),1)).split("$");
 				String nombre = JOptionPane.showInputDialog("<html>Ingrese nuevo precio, precio anterior:<b>"+String.valueOf(tm.getValueAt(tablaPrendas.getSelectedRow(),1)) + "</b></html>)");
 				if (nombre==null || nombre.equals("")){
 					JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio", "Error", JOptionPane.WARNING_MESSAGE);
@@ -364,7 +365,7 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 				else
 				{	
 				DefaultTableModel tm = (DefaultTableModel) tablaPrendas.getModel();
-				String nombre = JOptionPane.showInputDialog(null,"<html>Ingrese nuevo nombre para <b> "+ String.valueOf(tm.getValueAt(tablaPrendas.getSelectedRow(),0)) + "</b></html>");
+				String nombre = JOptionPane.showInputDialog("<html>Ingrese nuevo nombre para <b> "+ String.valueOf(tm.getValueAt(tablaPrendas.getSelectedRow(),0)) + "</b></html>",String.valueOf(tm.getValueAt(tablaPrendas.getSelectedRow(),0)));
 				if (nombre==null || nombre.equals("")){
 					JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio", "Error", JOptionPane.WARNING_MESSAGE);
 				}

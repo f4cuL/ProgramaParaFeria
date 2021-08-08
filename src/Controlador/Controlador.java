@@ -11,8 +11,16 @@ public class Controlador {
 	private agregarProovedor agregarProovedor;
 	private mostrarProovedorPrendas mostrarProovedorPrendas;
 	private agregarPrenda agregarPrenda;
+	private buscarPrendaNombre buscarPrendaNombre;
+		
 	
 	
+	public buscarPrendaNombre getBuscarPrendaNombre() {
+		return buscarPrendaNombre;
+	}
+	public void setBuscarPrendaNombre(buscarPrendaNombre buscarPrendaNombre) {
+		this.buscarPrendaNombre = buscarPrendaNombre;
+	}
 	public agregarPrenda getAgregarPrenda() {
 		return agregarPrenda;
 	}
