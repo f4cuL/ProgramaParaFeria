@@ -130,4 +130,8 @@ public class buscarPrendaNombre extends JInternalFrame {
 		getContentPane().setLayout(groupLayout);
 
 	}
+	public void dispose() {
+    	controlador.setBuscarPrendaNombre(null);
+        super.dispose();
+    }
 }

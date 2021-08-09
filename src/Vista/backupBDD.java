@@ -10,12 +10,16 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import Controlador.Controlador;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 
 public class backupBDD extends JInternalFrame {
 	private JTextField textField;
+	Controlador controlador;
 
 	/**
 	 * Launch the application.
@@ -101,5 +105,15 @@ public class backupBDD extends JInternalFrame {
 		);
 		getContentPane().setLayout(groupLayout);
 
+	}
+	public void dispose() {
+    	controlador.setBackupBDD(null);
+        super.dispose();
+    }
+	public Controlador getControlador() {
+		return controlador;
+	}
+	public void setControlador(Controlador controlador) {
+		this.controlador = controlador;
 	}
 }

@@ -152,6 +152,7 @@ public class menuPrincipal {
 				controlador.getModelo().centrarJIP(bDD);
 				desktopPane.add(bDD);
 				controlador.setBackupBDD(bDD);
+				bDD.setControlador(controlador);
 				try {
 					bDD.setSelected(true);
 				} catch (PropertyVetoException e1) {
