@@ -54,10 +54,11 @@ public class backupBDD extends JInternalFrame {
 				
 				if(ruta.trim().length()!=0) {
 					try {
-						backup = "C:\\\\xampp\\\\mysql\\\\bin\\\\mysqldump --opt -u root -B feria -r"+ruta+nombre;
+						backup = "C:\\\\xampp\\\\mysql\\\\bin\\\\mysqldump --opt -u root -B feria -r "+"\""+ruta+nombre+"\"";
 						Runtime rt = Runtime.getRuntime();
 						rt.exec(backup);
 						JOptionPane.showMessageDialog(null,"Backup creado con éxito");
+						System.out.println("\""+ruta+nombre+"\"");
 					} catch (Exception e2) {
 						System.out.println(e2);
 					}
