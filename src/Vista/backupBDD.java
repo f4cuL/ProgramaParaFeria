@@ -16,6 +16,7 @@ import Controlador.Controlador;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 
 public class backupBDD extends JInternalFrame {
 	private JTextField textField;
@@ -37,6 +38,7 @@ public class backupBDD extends JInternalFrame {
 		setTitle("Copia de seguridad");
 		setClosable(true);
 		JButton btnNewButton = new JButton("Seleccionar carpeta");
+		btnNewButton.setIcon(new ImageIcon(backupBDD.class.getResource("/imagenes/folder.png")));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser ch = new JFileChooser();
@@ -51,6 +53,7 @@ public class backupBDD extends JInternalFrame {
 		});
 		
 		JButton btnNewButton_1 = new JButton("Crear backup");
+		btnNewButton_1.setIcon(new ImageIcon(backupBDD.class.getResource("/imagenes/diskette.png")));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String ruta = textField.getText();
@@ -78,16 +81,18 @@ public class backupBDD extends JInternalFrame {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 248, GroupLayout.PREFERRED_SIZE)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addContainerGap()
+									.addComponent(textField, GroupLayout.PREFERRED_SIZE, 248, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(51)
+									.addComponent(btnNewButton_1)))
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 353, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(53)
-							.addComponent(btnNewButton_1)))
+							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 353, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -99,9 +104,11 @@ public class backupBDD extends JInternalFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnNewButton))
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addContainerGap(35, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addContainerGap(55, Short.MAX_VALUE)
 					.addComponent(btnNewButton_1)
-					.addContainerGap(12, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 		getContentPane().setLayout(groupLayout);
 

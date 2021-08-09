@@ -29,6 +29,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
 
 public class proovedores extends JInternalFrame {
 	
@@ -39,6 +40,7 @@ public class proovedores extends JInternalFrame {
 	JButton btnMpp;
 	private JButton btnNewButton;
 	private JButton btnNewButton_1;
+	private JLabel lblNewLabel;
 	public JButton getBtnMpp() {
 		return btnMpp;
 	}
@@ -249,6 +251,9 @@ public class proovedores extends JInternalFrame {
 				Controlador.getModelo().listarProovedores(table);
 			}
 		});
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(proovedores.class.getResource("/imagenes/clientes.png")));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -258,7 +263,9 @@ public class proovedores extends JInternalFrame {
 							.addContainerGap()
 							.addComponent(btnNewButton)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnNewButton_1))
+							.addComponent(btnNewButton_1)
+							.addGap(18)
+							.addComponent(lblNewLabel))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(49)
 							.addComponent(btnAgregarProovedor, GroupLayout.PREFERRED_SIZE, 173, GroupLayout.PREFERRED_SIZE)
@@ -275,7 +282,8 @@ public class proovedores extends JInternalFrame {
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnNewButton)
-						.addComponent(btnNewButton_1))
+						.addComponent(btnNewButton_1)
+						.addComponent(lblNewLabel))
 					.addGap(3)
 					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)
 					.addGap(18)

@@ -24,6 +24,7 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.ImageIcon;
 
 public class buscarPrendaNombre extends JInternalFrame {
 
@@ -67,6 +68,7 @@ public class buscarPrendaNombre extends JInternalFrame {
 		textField.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Buscar");
+		btnNewButton.setIcon(new ImageIcon(buscarPrendaNombre.class.getResource("/imagenes/icono.png")));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
