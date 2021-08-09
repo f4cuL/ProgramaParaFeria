@@ -115,7 +115,7 @@ public class menuPrincipal {
 		menuBar.add(mnNewMenu);
 
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Lista de proovedores");
-		mntmNewMenuItem_1.setIcon(new ImageIcon("C:\\Users\\facue\\OneDrive\\Escritorio\\clientes.png"));
+		mntmNewMenuItem_1.setIcon(new ImageIcon(menuPrincipal.class.getResource("/imagenes/clientes.png")));
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (contador == 0) {
@@ -139,21 +139,25 @@ public class menuPrincipal {
 		});
 		mnNewMenu.add(mntmNewMenuItem_1);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Test bdd");
-		mntmNewMenuItem.setIcon(new ImageIcon("C:\\Users\\facue\\OneDrive\\Escritorio\\diskette.png"));
+		JMenuItem mntmNewMenuItem = new JMenuItem("Copia de seguridad\r\n");
+		mntmNewMenuItem.setIcon(new ImageIcon(menuPrincipal.class.getResource("/imagenes/diskette.png")));
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				if (controlador.getBackupBDD()==null)
+				{
 				backupBDD bDD = new backupBDD();
 				bDD.setVisible(true);
 				bDD.toFront();
 				controlador.getModelo().centrarJIP(bDD);
 				desktopPane.add(bDD);
+				controlador.setBackupBDD(bDD);
 				try {
 					bDD.setSelected(true);
 				} catch (PropertyVetoException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+				}
 				}
 				
 			}
@@ -164,7 +168,7 @@ public class menuPrincipal {
 		menuBar.add(mnNewMenu_1);
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Buscar prenda por nombre");
-		mntmNewMenuItem_2.setIcon(new ImageIcon("C:\\Users\\facue\\OneDrive\\Escritorio\\icono.png"));
+		mntmNewMenuItem_2.setIcon(new ImageIcon(menuPrincipal.class.getResource("/imagenes/icono.png")));
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -189,12 +193,6 @@ public class menuPrincipal {
 			}
 			}});
 		mnNewMenu_1.add(mntmNewMenuItem_2);
-		
-		JMenu mnNewMenu_2 = new JMenu("New menu");
-		menuBar.add(mnNewMenu_2);
-		
-		JMenu menu = new JMenu("New menu");
-		menuBar.add(menu);
 		
 
 		frame.setVisible(true);

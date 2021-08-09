@@ -57,7 +57,7 @@ public class backupBDD extends JInternalFrame {
 						backup = "C:\\\\xampp\\\\mysql\\\\bin\\\\mysqldump --opt -u root -B feria -r"+ruta+nombre;
 						Runtime rt = Runtime.getRuntime();
 						rt.exec(backup);
-						JOptionPane.showMessageDialog(null,"Sin errores");
+						JOptionPane.showMessageDialog(null,"Backup creado con éxito");
 					} catch (Exception e2) {
 						System.out.println(e2);
 					}

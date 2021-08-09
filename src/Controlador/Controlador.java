@@ -12,10 +12,17 @@ public class Controlador {
 	private mostrarProovedorPrendas mostrarProovedorPrendas;
 	private agregarPrenda agregarPrenda;
 	private buscarPrendaNombre buscarPrendaNombre;
+	private backupBDD backupBDD;
 	
 	
 	
 	
+	public backupBDD getBackupBDD() {
+		return backupBDD;
+	}
+	public void setBackupBDD(backupBDD backupBDD) {
+		this.backupBDD = backupBDD;
+	}
 	public buscarPrendaNombre getBuscarPrendaNombre() {
 		return buscarPrendaNombre;
 	}
