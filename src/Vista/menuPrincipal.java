@@ -83,7 +83,7 @@ public class menuPrincipal {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\facue\\OneDrive\\Escritorio\\toolbar.png"));
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(menuPrincipal.class.getResource("/imagenes/toolbar.png")));
 		frame.setForeground(Color.WHITE);
 		frame.getContentPane().setEnabled(false);
 		frame.setTitle("RENOVA VIP");

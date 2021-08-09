@@ -61,7 +61,7 @@ public class agregarProovedor extends JInternalFrame {
 	public agregarProovedor() {
 		getContentPane().setEnabled(false);
 		setClosable(true);
-		setBounds(100, 100, 255, 196);
+		setBounds(100, 100, 255, 226);
 
 		JButton btnAgregarProovedor = new JButton("Agregar");
 		btnAgregarProovedor.addActionListener(new ActionListener() {
@@ -111,53 +111,52 @@ public class agregarProovedor extends JInternalFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblNewLabel_2))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(33)
-							.addComponent(btnAgregarProovedor)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnCancelar))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(31)
-							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(inptCodigo, Alignment.LEADING)
-								.addComponent(inputNombre, Alignment.LEADING)
-								.addComponent(lblNewLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-					.addContainerGap(33, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblNewLabel)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(inputNombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblNewLabel_2)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(inptCodigo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnCancelar)
-						.addComponent(btnAgregarProovedor))
-					.addGap(21))
-		);
 		
 		JLabel lblNewLabel_1 = new JLabel("Agregando nuevo proovedor");
 		panel.add(lblNewLabel_1);
 		lblNewLabel_1.setFont(new Font("Source Code Pro Light", Font.PLAIN, 11));
 		lblNewLabel_1.setEnabled(false);
+		GroupLayout groupLayout = new GroupLayout(getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(31)
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addComponent(inputNombre, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblNewLabel_2))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addComponent(inptCodigo, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(29)
+					.addComponent(btnAgregarProovedor)
+					.addGap(31)
+					.addComponent(btnCancelar))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(6)
+					.addComponent(lblNewLabel)
+					.addGap(6)
+					.addComponent(inputNombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(6)
+					.addComponent(lblNewLabel_2)
+					.addGap(6)
+					.addComponent(inptCodigo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(6)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnAgregarProovedor)
+						.addComponent(btnCancelar)))
+		);
 		getContentPane().setLayout(groupLayout);
 		setVisible(true);
 		contador++;
