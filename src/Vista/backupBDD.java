@@ -28,6 +28,7 @@ public class backupBDD extends JInternalFrame {
 		setBounds(100, 100, 449, 125);
 		
 		textField = new JTextField();
+		textField.setEditable(false);
 		textField.setColumns(10);
 		setTitle("Copia de seguridad");
 		setClosable(true);
