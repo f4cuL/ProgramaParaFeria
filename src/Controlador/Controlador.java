@@ -12,7 +12,8 @@ public class Controlador {
 	private mostrarProovedorPrendas mostrarProovedorPrendas;
 	private agregarPrenda agregarPrenda;
 	private buscarPrendaNombre buscarPrendaNombre;
-		
+	
+	
 	
 	
 	public buscarPrendaNombre getBuscarPrendaNombre() {

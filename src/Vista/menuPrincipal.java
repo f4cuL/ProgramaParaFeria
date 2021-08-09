@@ -20,6 +20,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyVetoException;
 import java.time.LocalDate;
 import java.awt.Color;
 import java.awt.Toolkit;
@@ -122,6 +123,13 @@ public class menuPrincipal {
 					desktopPane.add(proovedores);
 					controlador.getModelo().centrarJIP(proovedores);
 					controlador.getModelo().listarProovedores(proovedores.getTable());
+					proovedores.toFront();
+					try {
+						proovedores.setSelected(true);
+					} catch (PropertyVetoException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					contador++; 
 				}
 
@@ -133,8 +141,7 @@ public class menuPrincipal {
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				controlador.getModelo().buscarNombre("azul");
-				System.out.println("hola");
+				controlador.getModelo().buscarNombre(controlador.getBuscarPrendaNombre().getTable(),"cheeky");
 				
 			}
 		});
@@ -144,6 +151,24 @@ public class menuPrincipal {
 		menuBar.add(mnNewMenu_1);
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Buscar prenda por nombre");
+		mntmNewMenuItem_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				buscarPrendaNombre bPN = new buscarPrendaNombre();
+				bPN.setVisible(true);
+				controlador.setBuscarPrendaNombre(bPN);
+				desktopPane.add(bPN);
+				bPN.toFront();
+				bPN.setControlador(controlador);
+				try {
+					bPN.setSelected(true);
+				} catch (PropertyVetoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				controlador.getModelo().centrarJIP(bPN);
+			}
+		});
 		mnNewMenu_1.add(mntmNewMenuItem_2);
 		
 		JMenu mnNewMenu_2 = new JMenu("New menu");

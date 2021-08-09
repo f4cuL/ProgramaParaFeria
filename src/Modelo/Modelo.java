@@ -558,23 +558,26 @@ public class Modelo {
 		return false;
 	}
 	
-	public boolean buscarNombre(String palabra) {
-		String sql="select * from prenda where nombrePrenda like'%"+palabra+"%'";
+	public boolean buscarNombre(JTable tabla, String palabra) {
+		String sql="select pr.nombrePrenda, p.codigo, p.nombre from prenda pr inner join proovedores p on p.id=pr.idProovedor where pr.nombrePrenda like'%"+palabra+"%'";
 		try {
 			Connection con = conexion.getConexion();
 			PreparedStatement ps = null;
 			ResultSet rs = null;
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery(sql);
+			Object[] proovedor = new Object[3];
+			DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
 			while(rs.next())
 			{
-				System.out.println("hola");
-				System.out.println(rs.getString("nombrePrenda"));
+				proovedor[0]=rs.getString("pr.nombrePrenda");
+				proovedor[1]=rs.getString("p.nombre");
+				proovedor[2]=rs.getString("p.codigo");
+				modelo.addRow(proovedor);
 			}
 		}catch (Exception e){
 			System.out.println(e);
 		}
-		System.out.println("vacio");
 		return false;
 	}
 	
