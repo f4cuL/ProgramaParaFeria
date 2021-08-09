@@ -88,7 +88,7 @@ public class proovedores extends JInternalFrame {
 		});
 		
 		setTitle("Proovedores");
-		setBounds(100, 100, 744, 622);
+		setBounds(100, 100, 744, 742);
 		setVisible(true);
 		setClosable(true);
 		
@@ -255,18 +255,18 @@ public class proovedores extends JInternalFrame {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(44)
-							.addComponent(btnAgregarProovedor, GroupLayout.PREFERRED_SIZE, 173, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnMpp))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 728, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(btnNewButton)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnNewButton_1)))
+							.addComponent(btnNewButton_1))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(49)
+							.addComponent(btnAgregarProovedor, GroupLayout.PREFERRED_SIZE, 173, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnMpp))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 728, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
@@ -277,12 +277,12 @@ public class proovedores extends JInternalFrame {
 						.addComponent(btnNewButton)
 						.addComponent(btnNewButton_1))
 					.addGap(3)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 486, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)
+					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnMpp, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnAgregarProovedor, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 		getContentPane().setLayout(groupLayout);
 		

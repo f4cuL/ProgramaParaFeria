@@ -83,6 +83,7 @@ public class menuPrincipal {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\facue\\OneDrive\\Escritorio\\toolbar.png"));
 		frame.setForeground(Color.WHITE);
 		frame.getContentPane().setEnabled(false);
 		frame.setTitle("RENOVA VIP");
@@ -114,6 +115,7 @@ public class menuPrincipal {
 		menuBar.add(mnNewMenu);
 
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Lista de proovedores");
+		mntmNewMenuItem_1.setIcon(new ImageIcon("C:\\Users\\facue\\OneDrive\\Escritorio\\clientes.png"));
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (contador == 0) {
@@ -138,10 +140,21 @@ public class menuPrincipal {
 		mnNewMenu.add(mntmNewMenuItem_1);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Test bdd");
+		mntmNewMenuItem.setIcon(new ImageIcon("C:\\Users\\facue\\OneDrive\\Escritorio\\diskette.png"));
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				controlador.getModelo().buscarNombre(controlador.getBuscarPrendaNombre().getTable(),"cheeky");
+				backupBDD bDD = new backupBDD();
+				bDD.setVisible(true);
+				bDD.toFront();
+				controlador.getModelo().centrarJIP(bDD);
+				desktopPane.add(bDD);
+				try {
+					bDD.setSelected(true);
+				} catch (PropertyVetoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 			}
 		});
@@ -151,9 +164,12 @@ public class menuPrincipal {
 		menuBar.add(mnNewMenu_1);
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Buscar prenda por nombre");
+		mntmNewMenuItem_2.setIcon(new ImageIcon("C:\\Users\\facue\\OneDrive\\Escritorio\\icono.png"));
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				if (controlador.getBuscarPrendaNombre() == null)
+				{
 				buscarPrendaNombre bPN = new buscarPrendaNombre();
 				bPN.setVisible(true);
 				controlador.setBuscarPrendaNombre(bPN);
@@ -168,7 +184,10 @@ public class menuPrincipal {
 				}
 				controlador.getModelo().centrarJIP(bPN);
 			}
-		});
+			else {
+				
+			}
+			}});
 		mnNewMenu_1.add(mntmNewMenuItem_2);
 		
 		JMenu mnNewMenu_2 = new JMenu("New menu");

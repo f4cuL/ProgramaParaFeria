@@ -61,7 +61,7 @@ public class agregarProovedor extends JInternalFrame {
 	public agregarProovedor() {
 		getContentPane().setEnabled(false);
 		setClosable(true);
-		setBounds(100, 100, 255, 211);
+		setBounds(100, 100, 255, 196);
 
 		JButton btnAgregarProovedor = new JButton("Agregar");
 		btnAgregarProovedor.addActionListener(new ActionListener() {
@@ -100,7 +100,7 @@ public class agregarProovedor extends JInternalFrame {
 		
 		inputNombre = new JTextField();
 		inputNombre.setColumns(10);
-		
+		setTitle("Nuevo proovedor");
 		JLabel lblNewLabel = new JLabel("Nombre del proovedor");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
@@ -110,33 +110,30 @@ public class agregarProovedor extends JInternalFrame {
 		JLabel lblNewLabel_2 = new JLabel("Codigo proovedor");
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		panel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(33)
-							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblNewLabel))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(inputNombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(lblNewLabel_2))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(inptCodigo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(33)
 							.addComponent(btnAgregarProovedor)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnCancelar)))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addComponent(btnCancelar))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(31)
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+								.addComponent(inptCodigo, Alignment.LEADING)
+								.addComponent(inputNombre, Alignment.LEADING)
+								.addComponent(lblNewLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+					.addContainerGap(33, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
