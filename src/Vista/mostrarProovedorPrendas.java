@@ -125,6 +125,7 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 		});
 		
 		JButton btnNewButton_2 = new JButton("Borrar proovedor");
+		btnNewButton_2.setIcon(new ImageIcon(mostrarProovedorPrendas.class.getResource("/imagenes/warning.png")));
 		panel_1.add(btnNewButton_2);
 		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnNewButton_2.setForeground(Color.RED); 
@@ -242,6 +243,30 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 		
 		JLabel lblNewLabel_5_1 = new JLabel("");
 		lblNewLabel_5_1.setIcon(new ImageIcon(mostrarProovedorPrendas.class.getResource("/imagenes/clothes.png")));
+		
+		JButton btnNewButton_9 = new JButton("Borrar prenda\r\n");
+		btnNewButton_9.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (tablaPrendas.getSelectionModel().isSelectionEmpty()) {
+					JOptionPane.showMessageDialog(null, "DEBES SELECCIONAR UNA PRENDA PRIMERO",
+			                "ERROR", JOptionPane.ERROR_MESSAGE);				
+				}else {
+					switch (JOptionPane.showConfirmDialog(null, "¿Estás seguro?", "Borrando prenda ",
+			                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE)){
+					case 0: controlador.getModelo().borrarPrenda(controlador.getModelo().tomarIdTabla(tablaPrendas));
+					JOptionPane.showMessageDialog(null, "Borrado con éxito"); controlador.getModelo().limpiarTabla(tablaPrendas);
+					controlador.getModelo().listarPrendasPorNombreEstadoPago(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));break;
+			                case 1: JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio", "Error", JOptionPane.WARNING_MESSAGE);break;
+						
+					}
+				
+
+			}
+			}
+		}
+		);
+		btnNewButton_9.setForeground(Color.RED);
+		btnNewButton_9.setFont(new Font("Tahoma", Font.BOLD, 11));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -254,13 +279,17 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 									.addGroup(groupLayout.createSequentialGroup()
 										.addComponent(btnNewButton)
 										.addPreferredGap(ComponentPlacement.UNRELATED)
+										.addComponent(btnNewButton_9)
+										.addGap(24)
 										.addComponent(lblNewLabel_5))
 									.addComponent(lblNewLabel_1)
 									.addComponent(panel, GroupLayout.PREFERRED_SIZE, 826, GroupLayout.PREFERRED_SIZE))
-								.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-									.addComponent(lblNewLabel_2)
-									.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 280, GroupLayout.PREFERRED_SIZE)))
+								.addGap(18)
+								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+									.addGroup(groupLayout.createSequentialGroup()
+										.addComponent(lblNewLabel_2)
+										.addGap(159))
+									.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 347, Short.MAX_VALUE)))
 							.addComponent(scrollPane, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 1191, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -295,11 +324,14 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnNewButton)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+										.addComponent(btnNewButton)
+										.addComponent(btnNewButton_9))
+									.addGap(14)
+									.addComponent(lblNewLabel_1))
 								.addComponent(lblNewLabel_5))
-							.addGap(14)
-							.addComponent(lblNewLabel_1)
 							.addGap(4)
 							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()

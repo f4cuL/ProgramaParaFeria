@@ -165,6 +165,31 @@ public class menuPrincipal {
 		});
 		mnNewMenu.add(mntmNewMenuItem);
 		
+		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Subir copia de seguridad");
+		mntmNewMenuItem_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (controlador.getSubirBackup()==null)
+				{
+				subirBackup sB = new subirBackup();
+				sB.setVisible(true);
+				sB.toFront();
+				controlador.getModelo().centrarJIP(sB);
+				desktopPane.add(sB);
+				controlador.setSubirBackup(sB);
+				sB.setControlador(controlador);
+				try {
+					sB.setSelected(true);
+				} catch (PropertyVetoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				}
+			}
+
+		});
+		mntmNewMenuItem_3.setIcon(new ImageIcon(menuPrincipal.class.getResource("/imagenes/warning.png")));
+		mnNewMenu.add(mntmNewMenuItem_3);
+		
 		JMenu mnNewMenu_1 = new JMenu("Prendas");
 		menuBar.add(mnNewMenu_1);
 		

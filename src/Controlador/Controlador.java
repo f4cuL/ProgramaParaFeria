@@ -13,10 +13,16 @@ public class Controlador {
 	private agregarPrenda agregarPrenda;
 	private buscarPrendaNombre buscarPrendaNombre;
 	private backupBDD backupBDD;
+	private subirBackup subirBackup;
 	
 	
 	
-	
+	public subirBackup getSubirBackup() {
+		return subirBackup;
+	}
+	public void setSubirBackup(subirBackup subirBackup) {
+		this.subirBackup = subirBackup;
+	}
 	public backupBDD getBackupBDD() {
 		return backupBDD;
 	}

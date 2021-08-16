@@ -491,6 +491,19 @@ public class Modelo {
 		}
 		return true;
 	} 
+	public boolean borrarPrenda(String id) {
+		String sql="delete from prenda where id="+id;
+		try {
+			Connection con = conexion.getConexion();
+			PreparedStatement ps = null; 
+			ps = con.prepareStatement(sql);
+			ps.execute(sql);
+		}catch (Exception e){
+			System.out.println(e);
+			return false;
+		}
+		return true;
+	} 
 	public boolean cambiarPrecioPrenda(int precio, String id) {
 		String sql="update prenda set precio='"+precio+"' where id='"+id+"'";
 		try {
@@ -649,5 +662,18 @@ public class Modelo {
 	        columnModel.getColumn(column).setPreferredWidth(width);
 	    }
 	}
+	public boolean dropDatabase() {
+		String sql="Drop database feria";
+		try {
+			Connection con = conexion.getConexion();
+			PreparedStatement ps = null; 
+			ps = con.prepareStatement(sql);
+			ps.execute(sql);
+		}catch (Exception e){
+			System.out.println(e);
+			return false;
+		}
+		return true;
+	} 
 	
 }

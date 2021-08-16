@@ -25,6 +25,8 @@ import java.awt.Color;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.ImageIcon;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class buscarPrendaNombre extends JInternalFrame {
 
@@ -65,6 +67,22 @@ public class buscarPrendaNombre extends JInternalFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		
 		textField = new JTextField();
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+			    if (e.getKeyCode() == KeyEvent.VK_ENTER)
+			    {
+			    	if (textField.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "No puede estar vacio", "Error", JOptionPane.WARNING_MESSAGE);
+					} else {
+						controlador.getModelo().limpiarTabla(controlador.getBuscarPrendaNombre().getTable());
+						controlador.getModelo().buscarNombre(controlador.getBuscarPrendaNombre().getTable(),textField.getText());
+						controlador.getModelo().resizeColumnWidth(controlador.getBuscarPrendaNombre().getTable());
+					}
+				
+			    }
+			}
+		});
 		textField.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Buscar");
