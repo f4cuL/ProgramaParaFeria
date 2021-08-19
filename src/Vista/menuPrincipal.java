@@ -90,7 +90,7 @@ public class menuPrincipal {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setSize(screenSize);
 		
-		ImageIcon icon = new ImageIcon(getClass().getResource("/imagenes/fondo.png"));
+		ImageIcon icon = new ImageIcon(getClass().getResource("/imagenes/fondo1080.png"));
 		Image image = icon.getImage();
 
 		
