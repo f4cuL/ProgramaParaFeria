@@ -68,28 +68,41 @@ public class agregarPrenda extends JInternalFrame {
 		JButton btnNewButton = new JButton("Agregar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (inputPrecio.getText().isEmpty() || inputNombre.getText().isEmpty() || Integer.parseInt(inputPrecio.getText())<0)
+				if (inputPrecio.getText().isEmpty() || inputNombre.getText().isEmpty())
 				{
 					JOptionPane.showMessageDialog(null, "NO PUEDE ESTAR VACIO EL NOMBRE O EL PRECIO", "ERROR",
 							JOptionPane.ERROR_MESSAGE);
 				}
 				else {
-				try {
-					int precio=Integer.parseInt(inputPrecio.getText());
-					int id=Controlador.getModelo().tomarIDporCodigo(Controlador.getModelo().tomarCodigoTabla(Controlador.getProovedores().getTable()));
-					if (Controlador.getModelo().agregarPrenda(inputNombre.getText(),precio,id)) {
-						Controlador.getModelo().limpiarTabla(Controlador.getMostrarProovedorPrendas().getTablaPrendas());
-						Controlador.getModelo().listarPrendasPorNombreID(Controlador.getMostrarProovedorPrendas().getTablaPrendas(),Controlador.getModelo().tomarNombreTabla(Controlador.getProovedores().getTable()));
-						dispose();
-					};
-				} catch (Exception e2) {
-					// TODO: handle exception
-					if (!inputPrecio.getText().isEmpty())
-					{
-					JOptionPane.showMessageDialog(null, "NO PUEDE CONTENER LETRAS EL PRECIO", "ERROR",
-							JOptionPane.ERROR_MESSAGE);
+					try {
+						if(Integer.parseInt(inputPrecio.getText()) < 0)
+						{
+							JOptionPane.showMessageDialog(null, "NO PUEDE SER MENOR A 0 EL PRECIO", "ERROR",
+									JOptionPane.ERROR_MESSAGE);
+						}else{
+							try {
+								int precio=Integer.parseInt(inputPrecio.getText());
+								int id=Controlador.getModelo().tomarIDporCodigo(Controlador.getModelo().tomarCodigoTabla(Controlador.getProovedores().getTable()));
+								if (Controlador.getModelo().agregarPrenda(inputNombre.getText(),precio,id)) {
+									Controlador.getModelo().limpiarTabla(Controlador.getMostrarProovedorPrendas().getTablaPrendas());
+									Controlador.getModelo().listarPrendasPorNombreID(Controlador.getMostrarProovedorPrendas().getTablaPrendas(),Controlador.getModelo().tomarNombreTabla(Controlador.getProovedores().getTable()));
+									dispose();
+								};
+							} catch (Exception e2) {
+								// TODO: handle exception
+								if (!inputPrecio.getText().isEmpty())
+								{
+								JOptionPane.showMessageDialog(null, "NO PUEDE CONTENER LETRAS EL PRECIO", "ERROR",
+										JOptionPane.ERROR_MESSAGE);
+								}
+							}
+							
+						}
+					} catch (Exception e2) {
+						JOptionPane.showMessageDialog(null, "NO PUEDE CONTENER LETRAS EL PRECIO", "ERROR",
+								JOptionPane.ERROR_MESSAGE);
 					}
-				}
+
 				}
 			}
 		});

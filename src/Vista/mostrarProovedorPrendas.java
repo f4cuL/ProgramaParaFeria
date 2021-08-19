@@ -359,16 +359,27 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 					String numeros[] = String.valueOf(tm.getValueAt(tablaPrendas.getSelectedRow(), 1)).split("$");
 					String nombre = JOptionPane.showInputDialog("<html>Ingrese nuevo precio, precio anterior:<b>"
 							+ String.valueOf(tm.getValueAt(tablaPrendas.getSelectedRow(), 1)) + "</b></html>)");
-					if (nombre == null || nombre.equals("") || Integer.parseInt(nombre)<0) {
+					if (nombre == null || nombre.equals("")) {
 						JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio", "Error",
 								JOptionPane.WARNING_MESSAGE);
 					} else {
 						try {
-							controlador.getModelo().cambiarPrecioPrenda(Integer.parseInt(nombre),
+							if(Integer.parseInt(nombre)<0)
+							{
+								JOptionPane.showMessageDialog(null, "NO PUEDE SER MENOR A 0", "ERROR",
+										JOptionPane.ERROR_MESSAGE);
+							}else {
+								try {
+									controlador.getModelo().cambiarPrecioPrenda(Integer.parseInt(nombre),
 									controlador.getModelo().tomarIdTabla(tablaPrendas));
-							controlador.getModelo().limpiarTabla(tablaPrendas);
-							controlador.getModelo().listarPrendasPorNombreEstadoPago(tablaPrendas,
+									controlador.getModelo().limpiarTabla(tablaPrendas);
+									controlador.getModelo().listarPrendasPorNombreEstadoPago(tablaPrendas,
 									controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
+								} catch (Exception e2) {
+									JOptionPane.showMessageDialog(null, "TIENE QUE SER UN NUMERO", "ERROR",
+											JOptionPane.ERROR_MESSAGE);
+								}
+							}
 						} catch (Exception e2) {
 							JOptionPane.showMessageDialog(null, "TIENE QUE SER UN NUMERO", "ERROR",
 									JOptionPane.ERROR_MESSAGE);
