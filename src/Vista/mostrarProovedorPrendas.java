@@ -143,6 +143,9 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 		btnCambiarNombre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nombre = JOptionPane.showInputDialog("Ingrese nuevo nombre");
+				if (controlador.getModelo().nombreRepetido(nombre)){
+					JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio, ya existe otro proovedor con ese nombre", "Error", JOptionPane.WARNING_MESSAGE);
+				}else {
 				if (nombre==null || nombre.equals("")){
 					JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio", "Error", JOptionPane.WARNING_MESSAGE);
 				}else {
@@ -155,7 +158,7 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 					}
 					dispose();
 				}
-			}
+			}}
 		});
 		
 		JButton btnNewButton_6 = new JButton("Ordenar alfabeticamente");
