@@ -142,7 +142,8 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 		});
 		btnCambiarNombre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String nombre = JOptionPane.showInputDialog("Ingrese nuevo nombre");
+				DefaultTableModel tm = (DefaultTableModel) controlador.getProovedores().getTable().getModel();
+				String nombre = JOptionPane.showInputDialog("<html>Ingrese nuevo nombre para <b> "+ String.valueOf(tm.getValueAt(controlador.getProovedores().getTable().getSelectedRow(),0)) + "</b></html>",String.valueOf(tm.getValueAt(controlador.getProovedores().getTable().getSelectedRow(),0)));
 				if (controlador.getModelo().nombreRepetido(nombre)){
 					JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio, ya existe otro proovedor con ese nombre", "Error", JOptionPane.WARNING_MESSAGE);
 				}else {
@@ -351,28 +352,31 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 		btnNewButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (tablaPrendas.getSelectionModel().isSelectionEmpty()) {
-					JOptionPane.showMessageDialog(null, "DEBES SELECCIONAR UNA PRENDA PRIMERO",
-			                "ERROR", JOptionPane.ERROR_MESSAGE);				
-				}else
-				{	
-				DefaultTableModel tm = (DefaultTableModel) tablaPrendas.getModel();
-				String numeros[]=String.valueOf(tm.getValueAt(tablaPrendas.getSelectedRow(),1)).split("$");
-				String nombre = JOptionPane.showInputDialog("<html>Ingrese nuevo precio, precio anterior:<b>"+String.valueOf(tm.getValueAt(tablaPrendas.getSelectedRow(),1)) + "</b></html>)");
-				if (nombre==null || nombre.equals("")){
-					JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio", "Error", JOptionPane.WARNING_MESSAGE);
-				}
-				else {
-					try {
-						controlador.getModelo().cambiarPrecioPrenda(Integer.parseInt(nombre), controlador.getModelo().tomarIdTabla(tablaPrendas));
-						controlador.getModelo().limpiarTabla(tablaPrendas);
-						controlador.getModelo().listarPrendasPorNombreEstadoPago(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));					} catch (Exception e2) {
-						JOptionPane.showMessageDialog(null, "TIENE QUE SER UN NUMERO",
-				                "ERROR", JOptionPane.ERROR_MESSAGE);
-					}
-				
-				}
+					JOptionPane.showMessageDialog(null, "DEBES SELECCIONAR UNA PRENDA PRIMERO", "ERROR",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					DefaultTableModel tm = (DefaultTableModel) tablaPrendas.getModel();
+					String numeros[] = String.valueOf(tm.getValueAt(tablaPrendas.getSelectedRow(), 1)).split("$");
+					String nombre = JOptionPane.showInputDialog("<html>Ingrese nuevo precio, precio anterior:<b>"
+							+ String.valueOf(tm.getValueAt(tablaPrendas.getSelectedRow(), 1)) + "</b></html>)");
+					if (nombre == null || nombre.equals("") || Integer.parseInt(nombre)<0) {
+						JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio", "Error",
+								JOptionPane.WARNING_MESSAGE);
+					} else {
+						try {
+							controlador.getModelo().cambiarPrecioPrenda(Integer.parseInt(nombre),
+									controlador.getModelo().tomarIdTabla(tablaPrendas));
+							controlador.getModelo().limpiarTabla(tablaPrendas);
+							controlador.getModelo().listarPrendasPorNombreEstadoPago(tablaPrendas,
+									controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
+						} catch (Exception e2) {
+							JOptionPane.showMessageDialog(null, "TIENE QUE SER UN NUMERO", "ERROR",
+									JOptionPane.ERROR_MESSAGE);
+						}
 
-			}
+					}
+
+				}
 			}
 		});
 		JButton btnNewButton_1 = new JButton("Cambiar estado de pago");

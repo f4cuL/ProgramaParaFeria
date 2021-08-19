@@ -68,7 +68,7 @@ public class agregarPrenda extends JInternalFrame {
 		JButton btnNewButton = new JButton("Agregar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (inputPrecio.getText().isEmpty() || inputNombre.getText().isEmpty())
+				if (inputPrecio.getText().isEmpty() || inputNombre.getText().isEmpty() || Integer.parseInt(inputPrecio.getText())<0)
 				{
 					JOptionPane.showMessageDialog(null, "NO PUEDE ESTAR VACIO EL NOMBRE O EL PRECIO", "ERROR",
 							JOptionPane.ERROR_MESSAGE);
