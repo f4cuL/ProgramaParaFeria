@@ -548,6 +548,23 @@ public class Modelo {
 		}
 		return false;
 	}
+	public boolean nombreRepetido(String nombre) {
+		String sql="select * from proovedores where nombre='"+nombre+"'";
+		try {
+			Connection con = conexion.getConexion();
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery(sql);
+			while (rs.next()) {
+				return true;
+			}
+			return false;
+		}catch (Exception e){
+			System.out.println(e);
+		}
+		return false;
+	}
 	public boolean fechaNull(int id) {
 		String sql="select fechaPago from prenda where id="+id;
 		try {
@@ -662,18 +679,5 @@ public class Modelo {
 	        columnModel.getColumn(column).setPreferredWidth(width);
 	    }
 	}
-	public boolean dropDatabase() {
-		String sql="Drop database feria";
-		try {
-			Connection con = conexion.getConexion();
-			PreparedStatement ps = null; 
-			ps = con.prepareStatement(sql);
-			ps.execute(sql);
-		}catch (Exception e){
-			System.out.println(e);
-			return false;
-		}
-		return true;
-	} 
-	
+
 }

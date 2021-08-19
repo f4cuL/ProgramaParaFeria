@@ -166,6 +166,7 @@ public class menuPrincipal {
 		mnNewMenu.add(mntmNewMenuItem);
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Subir copia de seguridad");
+		mntmNewMenuItem_3.setEnabled(false);
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (controlador.getSubirBackup()==null)

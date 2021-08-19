@@ -79,7 +79,7 @@ public class agregarPrenda extends JInternalFrame {
 					int id=Controlador.getModelo().tomarIDporCodigo(Controlador.getModelo().tomarCodigoTabla(Controlador.getProovedores().getTable()));
 					if (Controlador.getModelo().agregarPrenda(inputNombre.getText(),precio,id)) {
 						Controlador.getModelo().limpiarTabla(Controlador.getMostrarProovedorPrendas().getTablaPrendas());
-						Controlador.getModelo().listarPrendasPorNombre(Controlador.getMostrarProovedorPrendas().getTablaPrendas(),Controlador.getModelo().tomarNombreTabla(Controlador.getProovedores().getTable()));
+						Controlador.getModelo().listarPrendasPorNombreID(Controlador.getMostrarProovedorPrendas().getTablaPrendas(),Controlador.getModelo().tomarNombreTabla(Controlador.getProovedores().getTable()));
 						dispose();
 					};
 				} catch (Exception e2) {

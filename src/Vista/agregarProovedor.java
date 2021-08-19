@@ -70,8 +70,8 @@ public class agregarProovedor extends JInternalFrame {
 					JOptionPane.showMessageDialog(null, "NO PUEDE ESTAR VACIO EL NOMBRE O EL CODIGO", "ERROR",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-					if (controlador.getModelo().codigoRepetido(inptCodigo.getText())) {
-						JOptionPane.showMessageDialog(null, "YA EXISTE UN PROOVEDOR CON ESE CODIGO", "ERROR",
+					if (controlador.getModelo().codigoRepetido(inptCodigo.getText()) || controlador.getModelo().nombreRepetido(inputNombre.getText()) ) {
+						JOptionPane.showMessageDialog(null, "YA EXISTE UN PROOVEDOR CON ESE CODIGO O NOMBRE", "ERROR",
 								JOptionPane.ERROR_MESSAGE);
 					} else {
 						if (JOptionPane.showConfirmDialog(null,
