@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -58,10 +59,6 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 		setControlador(controlador);
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-			}
 		});
 		JLabel lblNewLabel = new JLabel("<html>" +"Visualizando al proovedor <B>"+ controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()) + "</B> con el CODIGO  <B>" + controlador.getModelo().tomarCodigoTabla(controlador.getProovedores().getTable()) + "</B></html>") ;
 		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
@@ -218,12 +215,8 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 			public boolean isCellEditable(int row, int column){  
 		          return false;  
 		      }
+			
 		};
-		tablaPrendas.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
 		tablaPrendas.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -271,6 +264,10 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 		);
 		btnNewButton_9.setForeground(Color.RED);
 		btnNewButton_9.setFont(new Font("Tahoma", Font.BOLD, 11));
+		
+		JLabel TotalLabel= new JLabel("Total seleccionado = 0");
+		TotalLabel.setForeground(Color.DARK_GRAY);
+		TotalLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 28));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -284,8 +281,10 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 										.addComponent(btnNewButton)
 										.addPreferredGap(ComponentPlacement.UNRELATED)
 										.addComponent(btnNewButton_9)
-										.addGap(24)
-										.addComponent(lblNewLabel_5))
+										.addGap(18)
+										.addComponent(lblNewLabel_5)
+										.addGap(18)
+										.addComponent(TotalLabel, GroupLayout.PREFERRED_SIZE, 539, GroupLayout.PREFERRED_SIZE))
 									.addComponent(lblNewLabel_1)
 									.addComponent(panel, GroupLayout.PREFERRED_SIZE, 826, GroupLayout.PREFERRED_SIZE))
 								.addGap(18)
@@ -314,34 +313,39 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblNewLabel_3)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblNewLabel_4)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE))
-						.addComponent(lblNewLabel_5_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE))
-					.addGap(16)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 321, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-										.addComponent(btnNewButton)
-										.addComponent(btnNewButton_9))
+									.addComponent(lblNewLabel_3)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addContainerGap()
+									.addComponent(lblNewLabel_4)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE))
+								.addComponent(lblNewLabel_5_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE))
+							.addGap(16)
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 321, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+										.addComponent(lblNewLabel_5)
+										.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+											.addComponent(btnNewButton)
+											.addComponent(btnNewButton_9)))
 									.addGap(14)
-									.addComponent(lblNewLabel_1))
-								.addComponent(lblNewLabel_5))
-							.addGap(4)
-							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
+									.addComponent(lblNewLabel_1)
+									.addGap(4)
+									.addComponent(panel, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(lblNewLabel_2)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblNewLabel_2)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))))
+							.addGap(449)
+							.addComponent(TotalLabel)))
+					.addContainerGap(11, Short.MAX_VALUE))
 		);
 		
 		JButton btnNewButton_4 = new JButton("Cambiar nombre prenda");
@@ -394,7 +398,7 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 		panel_2.add(btnNewButton_1);
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnNewButton_1.setForeground(Color.BLUE);
-		
+
 		JButton btnNewButton_3 = new JButton("Cambiar estado de venta\r\n");
 		panel_2.add(btnNewButton_3);
 		btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -402,33 +406,47 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (tablaPrendas.getSelectionModel().isSelectionEmpty()) {
-					JOptionPane.showMessageDialog(null, "DEBES SELECCIONAR UNA PRENDA PRIMERO",
-			                "ERROR", JOptionPane.ERROR_MESSAGE);				
-				}
-				else {
-				controlador.getModelo().setVendidoTrueFalse(Integer.parseInt(controlador.getModelo().tomarIdTabla(tablaPrendas)));
-				controlador.getModelo().limpiarTabla(tablaPrendas);
-				controlador.getModelo().listarPrendasPorNombreEstadoPago(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));			
+					JOptionPane.showMessageDialog(null, "DEBES SELECCIONAR UNA PRENDA PRIMERO", "ERROR",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					int[] selectedRow = tablaPrendas.getSelectedRows();
+					for (int i = 0; i < selectedRow.length; i++) {
+						int selectedData = (int) tablaPrendas.getValueAt(selectedRow[i], 4);
+						controlador.getModelo().setVendidoTrueFalse(selectedData);
+					}
+
+					controlador.getModelo().limpiarTabla(tablaPrendas);
+					controlador.getModelo().listarPrendasPorNombreEstadoPago(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));
+
 				}
 			}
 		});
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			    
 				if (tablaPrendas.getSelectionModel().isSelectionEmpty()) {
 					JOptionPane.showMessageDialog(null, "DEBES SELECCIONAR UNA PRENDA PRIMERO",
 			                "ERROR", JOptionPane.ERROR_MESSAGE);				
-				}
+				}				
 				else {
-				controlador.getModelo().setPagoTrueFalse(Integer.parseInt(controlador.getModelo().tomarIdTabla(tablaPrendas)));
-				if (controlador.getModelo().fechaNull(Integer.parseInt(controlador.getModelo().tomarIdTabla(tablaPrendas)))){
-					controlador.getModelo().setearFecha(Integer.parseInt(controlador.getModelo().tomarIdTabla(tablaPrendas)));
-				}else {
-					controlador.getModelo().setearFechaNull(Integer.parseInt(controlador.getModelo().tomarIdTabla(tablaPrendas)));
+				    int[] selectedRow =  tablaPrendas.getSelectedRows();;
+					for (int i = 0; i < selectedRow.length; i++) {
+				        int selectedData =  (int) tablaPrendas.getValueAt(selectedRow[i],4);
+				        controlador.getModelo().setPagoTrueFalse(selectedData);
+				    
+					if (controlador.getModelo().fechaNull(selectedData)){
+						controlador.getModelo().setearFecha(selectedData);
+					}else {
+						controlador.getModelo().setearFechaNull(selectedData);
+					}
 				}
-				controlador.getModelo().limpiarTabla(tablaPrendas);
-				controlador.getModelo().listarPrendasPorNombreEstadoPago(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));			
-				}
-			}
+					controlador.getModelo().limpiarTabla(tablaPrendas);
+					controlador.getModelo().listarPrendasPorNombreEstadoPago(tablaPrendas,controlador.getModelo().tomarNombreTabla(controlador.getProovedores().getTable()));			
+					}
+
+			  }
+		
+			
 		});
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -454,7 +472,23 @@ public class mostrarProovedorPrendas extends JInternalFrame {
 		getContentPane().setLayout(groupLayout);
 		setVisible(true);
 		setClosable(true);
+		tablaPrendas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				float suma=0;
+				int[] selectedRow =  tablaPrendas.getSelectedRows();
+				for (int i = 0; i < selectedRow.length; i++) {
+			        String selectedData =  (String) tablaPrendas.getValueAt(selectedRow[i],1);
+			        StringBuilder MyString = new StringBuilder(selectedData);
+			        MyString = MyString.deleteCharAt(0);
+			        suma += Float.parseFloat(MyString.toString());
+				}
+				TotalLabel.setText("Total seleccionado = "+suma);
+			}
+			
+		});
 	}
+	
 
 
 	public Controlador getControlador() {

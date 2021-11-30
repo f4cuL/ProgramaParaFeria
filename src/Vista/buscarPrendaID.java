@@ -28,7 +28,7 @@ import javax.swing.ImageIcon;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class buscarPrendaNombre extends JInternalFrame {
+public class buscarPrendaID extends JInternalFrame {
 
 	Controlador controlador;
 	private JTable table;
@@ -59,44 +59,45 @@ public class buscarPrendaNombre extends JInternalFrame {
 	 * Create the frame.
 	 */
 	
-	public buscarPrendaNombre() {
-		setTitle("Buscador por nombre de prendas");
-		setBounds(100, 100, 632, 607);
+	public buscarPrendaID() {
+		setTitle("Buscador ID nombre de prendas");
+		setBounds(100, 100, 1080, 263);
 		setClosable(true);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
 		textField = new JTextField();
 		textField.addKeyListener(new KeyAdapter() {
-			@Override 
+			@Override
 			public void keyPressed(KeyEvent e) {
-			    if (e.getKeyCode() == KeyEvent.VK_ENTER && controlador.getBuscarPrendaNombre() != null)
+			    if (e.getKeyCode() == KeyEvent.VK_ENTER && controlador.getBuscarPrendaID() != null)
 			    {
 			    	if (textField.getText().equals("")) {
 						JOptionPane.showMessageDialog(null, "No puede estar vacio", "Error", JOptionPane.WARNING_MESSAGE);
 					} else {
-						controlador.getModelo().limpiarTabla(controlador.getBuscarPrendaNombre().getTable());
-						controlador.getModelo().buscarNombre(controlador.getBuscarPrendaNombre().getTable(),textField.getText());
-						controlador.getModelo().resizeColumnWidth(controlador.getBuscarPrendaNombre().getTable());
+						controlador.getModelo().limpiarTabla(controlador.getBuscarPrendaID().getTable());
+						controlador.getModelo().buscarPrendaID(controlador.getBuscarPrendaID().getTable(),textField.getText());
+						controlador.getModelo().resizeColumnWidth(controlador.getBuscarPrendaID().getTable());
 					}
 				
 			    }
-			} 
+			}
 		});
 		textField.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Buscar");
-		btnNewButton.setIcon(new ImageIcon(buscarPrendaNombre.class.getResource("/imagenes/icono.png"))); 
+		btnNewButton.setIcon(new ImageIcon(buscarPrendaID.class.getResource("/imagenes/icono.png")));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 			if (textField.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "No puede estar vacio", "Error", JOptionPane.WARNING_MESSAGE);
 				} else {
-					controlador.getModelo().limpiarTabla(controlador.getBuscarPrendaNombre().getTable());
-					controlador.getModelo().buscarNombre(controlador.getBuscarPrendaNombre().getTable(),textField.getText());
-					controlador.getModelo().resizeColumnWidth(controlador.getBuscarPrendaNombre().getTable());
-				} 
+					controlador.getModelo().limpiarTabla(controlador.getBuscarPrendaID().getTable());
+					controlador.getModelo().buscarPrendaID(controlador.getBuscarPrendaID().getTable(),textField.getText());
+					controlador.getModelo().resizeColumnWidth(controlador.getBuscarPrendaID().getTable());
+					
+				}
 			}
 		});
 		
@@ -130,7 +131,7 @@ public class buscarPrendaNombre extends JInternalFrame {
 					.addContainerGap())
 		);
 		
-		JLabel lblNewLabel = new JLabel("Nombre de la prenda a buscar");
+		JLabel lblNewLabel = new JLabel("ID de la prenda a buscar");
 		panel.add(lblNewLabel);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
 		
@@ -143,7 +144,7 @@ public class buscarPrendaNombre extends JInternalFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"Nombre","Nombre proovedor","Codigo"
+				"Codigo prenda","Nombre","Nombre proovedor","Codigo","Precio"
 			}
 		));
 		scrollPane.setViewportView(table);
@@ -151,7 +152,7 @@ public class buscarPrendaNombre extends JInternalFrame {
 
 	}
 	public void dispose() {
-    	controlador.setBuscarPrendaNombre(null);
+    	controlador.setBuscarPrendaID(null);
         super.dispose();
     }
 }

@@ -605,7 +605,31 @@ public class Modelo {
 				proovedor[2]=rs.getString("p.codigo");
 				modelo.addRow(proovedor);
 			}
-		}catch (Exception e){
+		}catch (Exception e){ 
+			System.out.println(e);
+		}
+		return false;
+	}
+	public boolean buscarPrendaID(JTable tabla, String palabra) {
+		String sql="select pr.id, pr.nombrePrenda, p.codigo, p.nombre, pr.precio from prenda pr inner join proovedores p on p.id=pr.idProovedor where pr.id like'%"+palabra+"%' limit 1";
+		try {
+			Connection con = conexion.getConexion();
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery(sql);
+			Object[] proovedor = new Object[5];
+			DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+			while(rs.next())
+			{
+				proovedor[0]=rs.getString("pr.id");
+				proovedor[1]=rs.getString("pr.nombrePrenda");
+				proovedor[2]=rs.getString("p.nombre");
+				proovedor[3]=rs.getString("p.codigo");
+				proovedor[4]=rs.getString("pr.precio");
+				modelo.addRow(proovedor);
+			}
+		}catch (Exception e){ 
 			System.out.println(e);
 		}
 		return false;

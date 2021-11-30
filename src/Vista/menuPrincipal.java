@@ -27,6 +27,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 
 public class menuPrincipal {
 
@@ -220,6 +221,23 @@ public class menuPrincipal {
 			}
 			}});
 		mnNewMenu_1.add(mntmNewMenuItem_2);
+		
+		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Buscar prenda por id");
+		mntmNewMenuItem_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (controlador.getBuscarPrendaID() == null) {
+				buscarPrendaID bPID = new buscarPrendaID();
+				controlador.setBuscarPrendaID(bPID);
+				desktopPane.add(bPID);
+				bPID.setVisible(true);
+				bPID.toFront();
+				controlador.getModelo().centrarJIP(bPID);
+				bPID.setControlador(controlador); 
+				}
+			}
+		});
+		mntmNewMenuItem_4.setIcon(new ImageIcon(menuPrincipal.class.getResource("/imagenes/icono.png")));
+		mnNewMenu_1.add(mntmNewMenuItem_4);
 		
 
 		frame.setVisible(true);

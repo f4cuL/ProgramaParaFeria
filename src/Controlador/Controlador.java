@@ -14,9 +14,16 @@ public class Controlador {
 	private buscarPrendaNombre buscarPrendaNombre;
 	private backupBDD backupBDD;
 	private subirBackup subirBackup;
+	private buscarPrendaID buscarPrendaID;
 	
 	
 	
+	public buscarPrendaID getBuscarPrendaID() {
+		return buscarPrendaID;
+	}
+	public void setBuscarPrendaID(buscarPrendaID buscarPrendaID) {
+		this.buscarPrendaID = buscarPrendaID;
+	}
 	public subirBackup getSubirBackup() {
 		return subirBackup;
 	}
